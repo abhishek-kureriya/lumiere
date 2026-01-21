@@ -1,0 +1,318 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "divider_Yp8raG": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 47,
+        "padding-block-end": 16
+      }
+    },
+    "collection_list_Wfgh3m": {
+      "type": "main-collection-list",
+      "blocks": {
+        "group_4FtiAg": {
+          "type": "group",
+          "name": "t:names.header",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 48,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_fRMQMR": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h4>Jewellery Collection</h4>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h2",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_fRMQMR"
+          ]
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "static": true,
+          "settings": {
+            "placement": "below_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "collection_card_gap": 0,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "solid",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0
+          },
+          "blocks": {
+            "collection_title_7YgBPU": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "square",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "gradient",
+                "gradient_direction": "to bottom",
+                "border": "solid",
+                "border_width": 0,
+                "border_opacity": 100,
+                "border_radius": 3
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_7YgBPU"
+          ]
+        }
+      },
+      "block_order": [
+        "group_4FtiAg"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".button {background: linear-gradient(135deg, #e6c87a, #d4af37); color: #111; border: none; padding: 14px 34px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; border-radius: 999px; cursor: pointer; transition: all 0.35s ease; box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);}",
+        ".button:hover {background: linear-gradient(135deg, #d4af37, #c9a23f); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212, 175, 55, 0.35);}",
+        ".button:active {transform: translateY(0); box-shadow: 0 6px 16px rgba(212, 175, 55, 0.25);}"
+      ],
+      "name": "Collection list",
+      "settings": {
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "columns": 3,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "bento_gap": 8,
+        "rows_gap": 24,
+        "max_collections": 4,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 12,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "collection_grid_eX8NQ4": {
+      "type": "collection-grid",
+      "blocks": {
+        "collection_UKqMjn": {
+          "type": "collection",
+          "settings": {
+            "collection": "premium-gold-plated-jewellery",
+            "collection_title": "Gold plated",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_wKFqFN": {
+          "type": "collection",
+          "settings": {
+            "collection": "new-arrivals",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_dMWnjr": {
+          "type": "collection",
+          "settings": {
+            "collection": "adjustable-rings",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_j4MtYA": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_mGVfYG": {
+          "type": "collection",
+          "settings": {
+            "collection": "jewellery-sets",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_bWgUXp": {
+          "type": "collection",
+          "settings": {
+            "collection": "bracelets",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_jgbPNR": {
+          "type": "collection",
+          "settings": {
+            "collection": "bridal-jewellery",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_CcjAYi": {
+          "type": "collection",
+          "settings": {
+            "collection": "earrings",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_eaYPMn": {
+          "type": "collection",
+          "settings": {
+            "collection": "everyday-essentials",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_XUt4dW": {
+          "type": "collection",
+          "settings": {
+            "collection": "festive-edit",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        },
+        "collection_XWqQef": {
+          "type": "collection",
+          "settings": {
+            "collection": "necklaces",
+            "collection_title": "",
+            "collection_subtitle": "★★★★★(4.7)"
+          }
+        }
+      },
+      "block_order": [
+        "collection_UKqMjn",
+        "collection_wKFqFN",
+        "collection_dMWnjr",
+        "collection_j4MtYA",
+        "collection_mGVfYG",
+        "collection_bWgUXp",
+        "collection_jgbPNR",
+        "collection_CcjAYi",
+        "collection_eaYPMn",
+        "collection_XUt4dW",
+        "collection_XWqQef"
+      ],
+      "custom_css": [],
+      "name": "Collection Showcase",
+      "settings": {
+        "section_heading": "Our Collections",
+        "section_subtitle": "",
+        "show_cta_button": false,
+        "cta_text": "",
+        "cta_link": "",
+        "show_trust_badges": true,
+        "trust_badge_1": "Premium Quality",
+        "trust_badge_2": "Certified Authentic",
+        "trust_badge_3": "4.9★ Rated"
+      }
+    }
+  },
+  "order": [
+    "divider_Yp8raG",
+    "collection_list_Wfgh3m",
+    "collection_grid_eX8NQ4"
+  ]
+}

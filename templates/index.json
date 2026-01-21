@@ -1,0 +1,250 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_lumiere_qxmYyk": {
+      "type": "hero-lumiere",
+      "blocks": {
+        "carousel_slide_gcPHkA": {
+          "type": "carousel_slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/WhatsApp_Image_2026-01-13_at_10.08.53.jpg",
+            "slide_link": "",
+            "slide_caption": ""
+          }
+        },
+        "carousel_slide_3G8F99": {
+          "type": "carousel_slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/20260113_160338.heic",
+            "slide_link": "",
+            "slide_caption": ""
+          }
+        },
+        "carousel_slide_K8QGem": {
+          "type": "carousel_slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/20260113_160523.heic",
+            "slide_link": "",
+            "slide_caption": ""
+          }
+        },
+        "carousel_slide_Fy9bwU": {
+          "type": "carousel_slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/WhatsApp_Image_2026-01-15_at_15.57.21.jpg",
+            "slide_link": "",
+            "slide_caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "carousel_slide_gcPHkA",
+        "carousel_slide_3G8F99",
+        "carousel_slide_K8QGem",
+        "carousel_slide_Fy9bwU"
+      ],
+      "name": "Hero Banner - Lumière V2",
+      "settings": {
+        "hero_style": "minimal-split",
+        "hero_image": "shopify://shop_images/fullbanner.png",
+        "hero_badge": "New Arrivals",
+        "hero_badge_link": "shopify://collections/new-arrivals",
+        "hero_heading": "",
+        "hero_subheading": "",
+        "hero_button_text": "SHOP LUMIÈRE",
+        "hero_button_link": "shopify://collections",
+        "hero_button_secondary_text": "",
+        "hero_button_secondary_link": "",
+        "show_trust_indicators": true,
+        "show_scroll_indicator": true,
+        "show_swap_hint": false
+      }
+    },
+    "collection_grid_p8UFyj": {
+      "type": "collection-grid",
+      "blocks": {
+        "collection_e6Dk7t": {
+          "type": "collection",
+          "settings": {
+            "collection": "earrings",
+            "collection_image": "shopify://shop_images/WhatsApp_Image_2026-01-12_at_14.01.21.jpg",
+            "collection_title": "Earrings",
+            "collection_subtitle": ""
+          }
+        },
+        "collection_hbnXbh": {
+          "type": "collection",
+          "settings": {
+            "collection": "rings",
+            "collection_image": "shopify://shop_images/WhatsApp_Image_2026-01-15_at_15.57.21.jpg",
+            "collection_title": "Rings",
+            "collection_subtitle": ""
+          }
+        },
+        "collection_hUFLJH": {
+          "type": "collection",
+          "settings": {
+            "collection": "necklaces",
+            "collection_image": "shopify://shop_images/WhatsApp_Image_2026-01-13_at_10.08.53.jpg",
+            "collection_title": "",
+            "collection_subtitle": ""
+          }
+        },
+        "collection_RUqrQ3": {
+          "type": "collection",
+          "settings": {
+            "collection": "bracelets",
+            "collection_image": "shopify://shop_images/WhatsApp_Image_2026-01-12_at_14.01.12.jpg",
+            "collection_title": "Bracelets",
+            "collection_subtitle": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_e6Dk7t",
+        "collection_hbnXbh",
+        "collection_hUFLJH",
+        "collection_RUqrQ3"
+      ],
+      "custom_css": [],
+      "name": "Collection Showcase",
+      "settings": {
+        "section_heading": "Premium Anti-Tarnish Collection",
+        "section_subtitle": "",
+        "show_cta_button": false,
+        "cta_text": "Explore Collections",
+        "cta_link": "",
+        "show_trust_badges": false,
+        "trust_badge_1": "Handcrafted",
+        "trust_badge_2": "Certified Authentic",
+        "trust_badge_3": "4.9★ Rated"
+      }
+    },
+    "featured_products_pYVj8f": {
+      "type": "featured-products",
+      "name": "Featured Jewelry",
+      "settings": {
+        "heading": "Our Best  Sellers",
+        "subtitle": "Timeless Elegance, Modern Design",
+        "collection": "best-sellers",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "button_text": "View All Products"
+      }
+    },
+    "testimonials_lumiere_9UJnkz": {
+      "type": "testimonials-lumiere",
+      "blocks": {
+        "testimonial_kGRqMy": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I didn’t expect the quality to be THIS good at this price point. The ring looks exactly like the photos and shines beautifully in natural light.",
+            "name": "Simran Kaur",
+            "detail": "Chandigarh — wearing ‘Solitaire Ring’",
+            "rating": 5
+          }
+        },
+        "testimonial_wiQepi": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The packaging and unboxing experience was beautiful. It genuinely felt like a luxury gift. I love how soft and classy the blush-gold theme looks.",
+            "name": "Neha Kapoor",
+            "detail": "Jaipur, India",
+            "rating": 5
+          }
+        },
+        "testimonial_kcARwk": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Absolutely in love with the finishing! The pieces feel so premium yet lightweight. I wore the earrings all day and they didn’t hurt at all.",
+            "name": "Aishwarya S",
+            "detail": "Mumbai, India",
+            "rating": 5
+          }
+        },
+        "testimonial_WB8gaL": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The designs are so elegant and minimal… exactly my style. I’ve already recommended LUMIÈRE to 3 friends after they complimented my necklace.",
+            "name": "Ritika Malhotra",
+            "detail": "Delhi, India",
+            "rating": 5
+          }
+        },
+        "testimonial_bCfpW6": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The quality and finishing is beautiful – light enough for all-day wear but still looks luxe.",
+            "name": "Archana",
+            "detail": "Bhopal, India",
+            "rating": 5
+          }
+        },
+        "testimonial_VdHn38": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The earrings are so lightweight and look super premium in person.",
+            "name": "Suma",
+            "detail": "Bangalore, India",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_kGRqMy",
+        "testimonial_wiQepi",
+        "testimonial_kcARwk",
+        "testimonial_WB8gaL",
+        "testimonial_bCfpW6",
+        "testimonial_VdHn38"
+      ],
+      "name": "LUMIERE – Testimonials slider",
+      "settings": {
+        "heading": "Loved by our customers"
+      }
+    },
+    "instagram_grid_lumiere_Y3TcCh": {
+      "type": "instagram-grid-lumiere",
+      "blocks": {
+        "image_q93yeR": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_MgC6fw": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/lm.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_q93yeR",
+        "image_MgC6fw"
+      ],
+      "name": "LUMIERE – Instagram grid",
+      "settings": {
+        "heading": "On Instagram",
+        "handle": "shoplumiere.in",
+        "url": "https://www.instagram.com/shoplumiere.in"
+      }
+    }
+  },
+  "order": [
+    "hero_lumiere_qxmYyk",
+    "collection_grid_p8UFyj",
+    "featured_products_pYVj8f",
+    "testimonials_lumiere_9UJnkz",
+    "instagram_grid_lumiere_Y3TcCh"
+  ]
+}

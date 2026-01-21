@@ -1,0 +1,677 @@
+<section class="collection-showcase {% unless section.settings.show_trust_badges %}no-trust-badges{% endunless %}">
+  <div class="collection-container">
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="section-title">{{ section.settings.section_heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.section_subtitle != blank -%}
+      <p class="section-subtitle">{{ section.settings.section_subtitle }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.show_cta_button -%}
+      <div class="section-cta-wrapper">
+        <a href="{{ section.settings.cta_link }}" class="section-cta-button">
+          {{ section.settings.cta_text | default: "Explore Collections" }}
+        </a>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_trust_badges -%}
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <svg class="trust-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+          </svg>
+          <span>{{ section.settings.trust_badge_1 | default: "Premium Quality" }}</span>
+        </div>
+        <div class="trust-badge">
+          <svg class="trust-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>{{ section.settings.trust_badge_2 | default: "Certified Authentic" }}</span>
+        </div>
+        <div class="trust-badge">
+          <svg class="trust-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+          <span>{{ section.settings.trust_badge_3 | default: "Trusted by 10,000+" }}</span>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="collection-grid">
+      {%- for block in section.blocks limit: 18-%}
+        {%- assign collection = collections[block.settings.collection] -%}
+        <a href="{{ collection.url }}" class="collection-card">
+          <div class="collection-card-inner">
+            {%- if block.settings.collection_image != blank -%}
+              {{ block.settings.collection_image | image_url: width: 800 | image_tag: alt: block.settings.collection_title, class: 'collection-image' }}
+            {%- elsif collection.image -%}
+              {{ collection.image | image_url: width: 800 | image_tag: alt: collection.title, class: 'collection-image' }}
+            {%- else -%}
+              <div class="collection-placeholder"></div>
+            {%- endif -%}
+
+            <div class="collection-overlay"></div>
+
+            <div class="collection-info">
+              <h3 class="collection-title">
+                {{ block.settings.collection_title | default: collection.title }}
+              </h3>
+              
+              {%- if block.settings.collection_subtitle != blank -%}
+                <p class="collection-subtitle">{{ block.settings.collection_subtitle }}</p>
+              {%- endif -%}
+
+              <span class="collection-cta">
+                Explore Collection
+                <svg class="cta-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+/* ============================================
+   PREMIUM COLLECTION SHOWCASE - REFINED LUXURY
+   ============================================ */
+
+.collection-showcase {
+  padding: 6rem 5%;
+  background: #FEFDFB; /* Clean off-white instead of gradient */
+  position: relative;
+}
+
+/* Reduce top padding when trust badges are hidden */
+.collection-showcase.no-trust-badges {
+  padding-top: 2rem;
+}
+
+/* Subtle background texture (optional) */
+.collection-showcase::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.collection-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   SECTION HEADER
+   ============================================ */
+
+.section-title {
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-bottom: 1rem;
+  color: #1A1A1A;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: #666;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* ============================================
+   SECTION CTA BUTTON (Optional - above collections)
+   ============================================ */
+
+.section-cta-wrapper {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-cta-button {
+  display: inline-block;
+  padding: 14px 40px;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1A1A1A;
+  background: transparent;
+  border: 1.5px solid #1A1A1A;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.section-cta-button:hover {
+  background: #1A1A1A;
+  color: #FEFDFB;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 26, 26, 0.15);
+}
+
+/* ============================================
+   TRUST BADGES - BETTER VISIBILITY
+   ============================================ */
+
+.trust-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: #333; /* Darker for better visibility */
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.trust-icon {
+  color: #C9A961; /* Muted gold */
+  stroke-width: 1.5;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   COLLECTION GRID
+   ============================================ */
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.collection-card {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  border-radius: 4px; /* Minimal rounding for sophistication */
+  background: #F5F5F5;
+}
+
+.collection-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  border-radius: inherit;
+}
+
+.collection-card:hover .collection-card-inner {
+  transform: scale(1.02);
+}
+
+.collection-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  transition: opacity 0.6s ease;
+}
+
+.collection-card:hover .collection-image {
+  opacity: 0.92;
+}
+
+.collection-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%);
+}
+
+/* ============================================
+   OVERLAY - MORE SUBTLE
+   ============================================ */
+
+.collection-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.05) 40%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 1;
+  transition: background 0.4s ease;
+}
+
+.collection-card:hover .collection-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.1) 35%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+/* ============================================
+   COLLECTION INFO
+   ============================================ */
+
+.collection-info {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  z-index: 2;
+  color: #ffffff;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.collection-card:hover .collection-info {
+  transform: translateY(-6px);
+}
+
+.collection-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+  color: #ffffff;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.collection-subtitle {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  color: #F5F5F5;
+  margin: 0 0 1rem;
+  font-weight: 300;
+}
+
+/* ============================================
+   CTA BUTTON - REFINED & ELEGANT
+   ============================================ */
+
+.collection-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 10px 24px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1A1A1A;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.collection-card:hover .collection-cta {
+  opacity: 1;
+  transform: translateY(0);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.collection-card:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Subtle glow on title hover */
+.collection-card:hover .collection-title {
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .collection-showcase {
+    padding: 2rem 4%; /* Reduced from 3rem */
+  }
+
+  .collection-showcase.no-trust-badges {
+    padding-top: 1rem; /* Reduced from 1.5rem */
+  }
+
+  .section-title {
+    font-size: 1.5rem; /* Slightly reduced */
+    margin-bottom: 0.6rem; /* Reduced */
+  }
+
+  .section-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem; /* Reduced from 1.5rem */
+    padding: 0 0.5rem; /* Reduced side padding */
+  }
+
+  .trust-badges {
+    gap: 1rem; /* Reduced from 1.5rem */
+    margin-bottom: 2rem; /* Reduced from 2.5rem */
+    padding: 0 0.5rem; /* Reduced from 1rem */
+  }
+
+  .trust-badge {
+    font-size: 0.8rem; /* Slightly reduced */
+    color: #1A1A1A;
+    font-weight: 500;
+  }
+
+  .trust-icon {
+    width: 16px; /* Reduced from 18px */
+    height: 16px;
+  }
+
+  /* Keep 2 columns on mobile */
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem; /* Reduced from 1rem */
+    margin-top: 1.5rem; /* Reduced from 3rem */
+  }
+
+  .collection-card {
+    height: 220px; /* Reduced from 240px */
+    border-radius: 3px;
+  }
+
+  .collection-info {
+    bottom: 1rem; /* Reduced from 1.2rem */
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .collection-title {
+    font-size: 0.95rem; /* Slightly reduced */
+    letter-spacing: 0.02em;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .collection-subtitle {
+    font-size: 0.7rem; /* Reduced from 0.75rem */
+    margin-bottom: 0.6rem;
+    font-weight: 400;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Show CTA by default on mobile */
+  .collection-cta {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 6px 14px; /* Slightly reduced */
+    font-size: 0.65rem; /* Reduced from 0.7rem */
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  .cta-arrow {
+    width: 11px; /* Reduced from 12px */
+    height: 11px;
+  }
+
+  .section-cta-button {
+    padding: 12px 28px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-showcase {
+    padding: 1.5rem 3%; /* Reduced from 2.5rem */
+  }
+
+  .collection-showcase.no-trust-badges {
+    padding-top: 0.8rem; /* Reduced from 1rem */
+  }
+
+  .section-title {
+    font-size: 1.3rem; /* Reduced from 1.4rem */
+  }
+
+  .section-subtitle {
+    font-size: 0.75rem; /* Reduced from 0.8rem */
+  }
+
+  .trust-badges {
+    gap: 1rem; /* Reduced from 1.2rem */
+    margin-bottom: 1.5rem; /* Reduced from 2rem */
+  }
+
+  .trust-badge {
+    font-size: 0.75rem; /* Reduced from 0.8rem */
+    color: #1A1A1A;
+  }
+
+  .trust-icon {
+    width: 15px; /* Reduced from 16px */
+    height: 15px;
+  }
+
+  /* 2 columns even on very small screens */
+  .collection-grid {
+    gap: 0.6rem; /* Reduced from 0.8rem */
+    margin-top: 1rem; /* Added to reduce space */
+  }
+
+  .collection-card {
+    height: 190px; /* Reduced from 200px */
+  }
+
+  .collection-info {
+    bottom: 0.8rem; /* Reduced from 1rem */
+    left: 0.8rem;
+    right: 0.8rem;
+  }
+
+  .collection-title {
+    font-size: 1.2rem; /* Reduced from 0.9rem */
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  .collection-subtitle {
+    font-size: 0.65rem; /* Reduced from 0.7rem */
+    margin-bottom: 0.4rem; /* Reduced from 0.5rem */
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .collection-cta {
+    padding: 5px 10px; /* Reduced from 6px 14px */
+    font-size: 0.55rem; /* Reduced from 0.65rem */
+    font-weight: 600;
+  }
+
+  .cta-arrow {
+    width: 10px;
+    height: 10px;
+  }
+
+  .section-cta-button {
+    padding: 10px 24px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .collection-card {
+    height: 180px;
+  }
+
+  .collection-title {
+    font-size: 0.85rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+  }
+
+  .collection-subtitle {
+    font-size: 0.65rem;
+  }
+
+  .collection-cta {
+    padding: 5px 12px;
+    font-size: 0.6rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Collection Showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Curated Collections"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Section Subtitle (Optional)",
+      "info": "Brief description below the heading"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action (Optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_button",
+      "label": "Show CTA Button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Explore Collections"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show Trust Badges",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_1",
+      "label": "Badge 1 Text",
+      "default": "Premium Quality"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_2",
+      "label": "Badge 2 Text",
+      "default": "Certified Authentic"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_3",
+      "label": "Badge 3 Text",
+      "default": "Trusted by 10,000+"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        { 
+          "type": "collection", 
+          "id": "collection", 
+          "label": "Collection" 
+        },
+        { 
+          "type": "image_picker", 
+          "id": "collection_image", 
+          "label": "Custom Image (Optional)",
+          "info": "Overrides collection featured image"
+        },
+        { 
+          "type": "text", 
+          "id": "collection_title", 
+          "label": "Custom Title (Optional)",
+          "info": "Overrides collection title"
+        },
+        { 
+          "type": "text", 
+          "id": "collection_subtitle", 
+          "label": "Subtitle",
+          "info": "Brief description (e.g., '24 Pieces' or 'New Arrivals')"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Showcase Premium",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}

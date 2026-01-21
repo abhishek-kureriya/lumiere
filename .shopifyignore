@@ -1,0 +1,48 @@
+nano .shopifyignore
+```
+
+Add these lines:
+```
+# Documentation
+docs/
+README.md
+CHANGELOG.md
+
+# Design files
+design/
+mockups/
+*.psd
+*.sketch
+*.fig
+
+# Screenshots & images for documentation
+screenshots/
+demo-images/
+
+# Development files
+node_modules/
+src/
+*.log
+.env
+.env.local
+
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.vscode/
+.idea/
+
+# Build files
+dist/
+build/
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Config files (if not needed on Shopify)
+.prettierrc
+.eslintrc
+```

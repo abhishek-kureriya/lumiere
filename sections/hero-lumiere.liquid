@@ -1,0 +1,1076 @@
+{% comment %}
+===========================================
+PREMIUM HERO SECTIONS - FIXED WITH WORKING SWIPE
+Based on working product page carousel logic
+===========================================
+{% endcomment %}
+
+{%- assign hero_style = section.settings.hero_style | default: 'minimal-split' -%}
+
+{%- if hero_style == 'minimal-split' -%}
+<section class="hero-minimal-split">
+  <div class="hero-split-container">
+    <div class="hero-split-content">
+      {%- if section.settings.hero_badge != blank -%}
+        {%- if section.settings.hero_badge_link != blank -%}
+          <a href="{{ section.settings.hero_badge_link }}" class="hero-badge hero-badge-link">
+            {{ section.settings.hero_badge }}
+          </a>
+        {%- else -%}
+          <div class="hero-badge">{{ section.settings.hero_badge }}</div>
+        {%- endif -%}
+      {%- endif -%}
+      
+      {%- if section.settings.hero_heading != blank -%}
+        <h1 class="hero-split-heading">{{ section.settings.hero_heading }}</h1>
+      {%- endif -%}
+      
+      {%- if section.settings.hero_subheading != blank -%}
+        <p class="hero-split-subheading">{{ section.settings.hero_subheading }}</p>
+      {%- endif -%}
+      
+      <div class="hero-split-actions">
+        {%- if section.settings.hero_button_text != blank -%}
+          <a href="{{ section.settings.hero_button_link }}" class="hero-btn-primary">
+            {{ section.settings.hero_button_text }}
+          </a>
+        {%- endif -%}
+        
+        {%- if section.settings.hero_button_secondary_text != blank -%}
+          <a href="{{ section.settings.hero_button_secondary_link }}" class="hero-btn-secondary">
+            {{ section.settings.hero_button_secondary_text }}
+          </a>
+        {%- endif -%}
+      </div>
+      
+      {%- if section.settings.show_trust_indicators -%}
+        <div class="hero-trust-indicators">
+          <div class="trust-item">
+            <span class="trust-value">10,000+</span>
+            <span class="trust-label">Happy Customers</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-value">4.9★</span>
+            <span class="trust-label">Average Rating</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-value">100%</span>
+            <span class="trust-label">Authentic</span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <div class="hero-split-image">
+      {%- if section.blocks.size > 0 -%}
+        <div class="hero-image-container" id="heroImageContainer">
+          <div class="hero-main-image-wrapper">
+            {%- for block in section.blocks -%}
+              <div class="hero-image-slide {% if forloop.first %}active{% endif %}" data-slide-index="{{ forloop.index0 }}">
+                {%- if block.settings.slide_image != blank -%}
+                  <img 
+                    src="{{ block.settings.slide_image | image_url: width: 1200 }}" 
+                    alt="{{ block.settings.slide_image.alt | default: 'Hero image' }}"
+                    class="hero-slide-image hero-slide-main"
+                    data-slide-url="{{ block.settings.slide_image | image_url: width: 1200 }}" width="800"
+            height="800">
+                {%- endif -%}
+                
+                {%- if block.settings.slide_image_swap != blank -%}
+                  <img 
+                    src="{{ block.settings.slide_image_swap | image_url: width: 1200 }}" 
+                    alt="{{ block.settings.slide_image_swap.alt | default: 'Alternate image' }}"
+                    class="hero-slide-image hero-slide-swap" width="800"
+            height="800"> 
+                {%- endif -%}
+                
+                {%- if block.settings.slide_caption != blank -%}
+                  <div class="hero-slide-caption">{{ block.settings.slide_caption }}</div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          
+          {%- if section.blocks.size > 1 -%}
+            <button class="hero-nav-arrow left" id="heroPrev">‹</button>
+            <button class="hero-nav-arrow right" id="heroNext">›</button>
+          <!-- ><div class="hero-counter" id="heroCounter">1 / {{ section.blocks.size }}</div> -->
+          {%- endif -%}
+          
+          {%- if section.settings.show_swap_hint -%}
+            <div class="hero-swipe-hint">← Swipe to compare →</div>
+          {%- endif -%}
+        </div>
+        
+        {%- if section.blocks.size > 1 -%}
+          <div class="hero-dots-container">
+            {%- for block in section.blocks -%}
+              <button class="hero-dot {% if forloop.first %}active{% endif %}" data-dot-index="{{ forloop.index0 }}"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- elsif section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 1200 | image_tag: class: 'hero-static-img' }}
+      {%- else -%}
+        <div class="hero-placeholder"></div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- elsif hero_style == 'centered-card' -%}
+<section class="hero-centered-card">
+  <div class="hero-background-wrapper">
+    {%- if section.settings.hero_image != blank -%}
+      {{ section.settings.hero_image | image_url: width: 2000 | image_tag: class: 'hero-bg-image' }}
+    {%- endif -%}
+    <div class="hero-overlay"></div>
+  </div>
+  
+  <div class="hero-card-container">
+    <div class="hero-content-card">
+      {%- if section.settings.hero_badge != blank -%}
+        <div class="hero-badge-centered">{{ section.settings.hero_badge }}</div>
+      {%- endif -%}
+      
+      {%- if section.settings.hero_heading != blank -%}
+        <h1 class="hero-card-heading">{{ section.settings.hero_heading }}</h1>
+      {%- endif -%}
+      
+      {%- if section.settings.hero_subheading != blank -%}
+        <p class="hero-card-subheading">{{ section.settings.hero_subheading }}</p>
+      {%- endif -%}
+      
+      {%- if section.settings.hero_button_text != blank -%}
+        <a href="{{ section.settings.hero_button_link }}" class="hero-card-button">
+          {{ section.settings.hero_button_text }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- else -%}
+<section class="hero-cinematic">
+  <div class="hero-cinematic-bg">
+    {%- if section.settings.hero_image != blank -%}
+      {{ section.settings.hero_image | image_url: width: 2000 | image_tag: class: 'hero-cinematic-image' }}
+    {%- endif -%}
+    <div class="hero-cinematic-overlay"></div>
+  </div>
+  
+  <div class="hero-cinematic-content">
+    {%- if section.settings.hero_badge != blank -%}
+      <div class="hero-badge-cinematic">{{ section.settings.hero_badge }}</div>
+    {%- endif -%}
+    
+    {%- if section.settings.hero_heading != blank -%}
+      <h1 class="hero-cinematic-heading">{{ section.settings.hero_heading }}</h1>
+    {%- endif -%}
+    
+    {%- if section.settings.hero_subheading != blank -%}
+      <p class="hero-cinematic-subheading">{{ section.settings.hero_subheading }}</p>
+    {%- endif -%}
+    
+    {%- if section.settings.hero_button_text != blank -%}
+      <a href="{{ section.settings.hero_button_link }}" class="hero-cinematic-button">
+        {{ section.settings.hero_button_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+<style>
+/* BASE STYLES */
+.hero-minimal-split {
+  position: relative;
+  min-height: 75vh;
+  max-height: 850px;
+  background: #FEFDFB;
+  padding: 2rem 5%;
+  margin-top: 80px;
+}
+
+.hero-split-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-split-content {
+  padding: .1rem 0;
+  animation: fadeInLeft 1s ease-out;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background: linear-gradient(135deg, #D4AF37 0%, #F4C2C2 100%);
+  color: #FEFDFB;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+}
+
+.hero-badge-link {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.hero-badge-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.35);
+}
+
+.hero-split-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  color: #1A1A1A;
+}
+
+.hero-split-subheading {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.7;
+  color: #666;
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+  font-weight: 300;
+}
+
+.hero-split-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0rem;
+}
+
+.hero-btn-primary {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #D4AF37 0%, #F4C2C2 100%);
+  color: #FEFDFB !important;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #F4C2C2 0%, #D4AF37 100%);
+  transition: left 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: -1;
+}
+
+.hero-btn-primary:hover::before {
+  left: 0;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.hero-btn-secondary {
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: #D4AF37 !important;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 2px solid #D4AF37;
+  transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.hero-btn-secondary:hover {
+  background: linear-gradient(135deg, #D4AF37 0%, #F4C2C2 100%);
+  color: #FEFDFB !important;
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
+
+.hero-trust-indicators {
+  display: flex;
+  gap: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.trust-value {
+  font-size: 1rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #D4AF37, #F4C2C2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.trust-label {
+  font-size: 0.8rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-split-image {
+  height: 100%;
+  min-height: 500px;
+  position: relative;
+  animation: fadeInRight 1s ease-out;
+}
+
+.hero-static-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.hero-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #F5F5F5, #E8E8E8);
+  border-radius: 4px;
+}
+
+/* HERO CAROUSEL - EXACT COPY OF WORKING PRODUCT PAGE */
+.hero-image-container {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+
+.hero-main-image-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hero-image-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s, visibility 0.6s;
+}
+
+.hero-image-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.hero-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-slide-main {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-slide-swap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.hero-slide-swap.visible {
+  opacity: 1;
+}
+
+.hero-slide-caption {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  font-size: 0.9rem;
+  color: #1A1A1A;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 4;
+  border-radius: 4px;
+}
+
+.hero-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45px;
+  height: 45px;
+  border: 2px solid rgba(212,175,55,0.8);
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  color: #d4af37;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  opacity: 0;
+}
+
+.hero-image-container:hover .hero-nav-arrow {
+  opacity: 1;
+}
+
+.hero-nav-arrow.left {
+  left: 1rem;
+}
+
+.hero-nav-arrow.right {
+  right: 1rem;
+}
+
+.hero-nav-arrow:hover {
+  background: #d4af37;
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.hero-counter {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
+}
+
+.hero-swipe-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  animation: swipeHintFade 3s ease-in-out 1s;
+  z-index: 5;
+}
+
+@keyframes swipeHintFade {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
+}
+
+.hero-dots-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.hero-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.hero-dot:hover {
+  background: rgba(212, 175, 55, 0.6);
+  transform: scale(1.2);
+}
+
+.hero-dot.active {
+  background: #D4AF37;
+  border-color: #D4AF37;
+  transform: scale(1.2);
+}
+
+/* OTHER HERO STYLES */
+.hero-centered-card {
+  position: relative;
+  min-height: 80vh;
+  max-height: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.hero-background-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-card-container {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+.hero-content-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 4rem 3.5rem;
+  max-width: 650px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.hero-badge-centered {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: #1A1A1A;
+  color: #FEFDFB;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.hero-card-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: #1A1A1A;
+}
+
+.hero-card-subheading {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.7;
+  color: #666;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+
+.hero-card-button {
+  display: inline-block;
+  padding: 1.1rem 2.8rem;
+  background: #1A1A1A;
+  color: #FEFDFB !important;
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.35s ease;
+}
+
+.hero-card-button:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-cinematic {
+  position: relative;
+  height: 100vh;
+  max-height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-cinematic-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-cinematic-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-cinematic-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.hero-cinematic-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  max-width: 900px;
+}
+
+.hero-badge-cinematic {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: #FEFDFB;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+
+.hero-cinematic-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: #FEFDFB;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero-cinematic-subheading {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 3rem;
+  font-weight: 300;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-cinematic-button {
+  display: inline-block;
+  padding: 1.2rem 3rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1A1A1A !important;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(10px);
+}
+
+.hero-cinematic-button:hover {
+  background: #FEFDFB;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ANIMATIONS */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-minimal-split {
+    min-height: auto;
+    padding: 1.5rem 4%;
+    margin-top: 70px;
+  }
+  
+  .hero-split-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .hero-split-image {
+    min-height: 400px;
+    order: -1;
+  }
+  
+  .hero-split-actions {
+    flex-direction: column;
+  }
+  
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .hero-trust-indicators {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .hero-nav-arrow {
+    opacity: 0.7;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .hero-swipe-hint {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-split-image {
+    min-height: 300px;
+  }
+  
+  .hero-nav-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 1.5rem;
+  }
+  
+  .hero-nav-arrow.left {
+    left: 0.5rem;
+  }
+  
+  .hero-nav-arrow.right {
+    right: 0.5rem;
+  }
+}
+</style>
+
+<script>
+// EXACT COPY OF WORKING PRODUCT PAGE CAROUSEL LOGIC
+let heroCurrentIndex = 0;
+let heroSlides = [];
+let heroTouchStartX = 0;
+let heroTouchEndX = 0;
+let heroIsSwiping = false;
+
+document.addEventListener('DOMContentLoaded', function() {
+  initializeHeroCarousel();
+});
+
+function initializeHeroCarousel() {
+  const container = document.getElementById('heroImageContainer');
+  const slides = document.querySelectorAll('.hero-image-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  
+  if (!container || slides.length === 0) return;
+  
+  // Build slides array
+  slides.forEach((slide, index) => {
+    const mainImg = slide.querySelector('.hero-slide-main');
+    heroSlides.push({
+      element: slide,
+      index: index,
+      url: mainImg ? mainImg.dataset.slideUrl : ''
+    });
+  });
+  
+  // Touch events - EXACT SAME AS PRODUCT PAGE
+  container.addEventListener('touchstart', handleHeroTouchStart, { passive: true });
+  container.addEventListener('touchmove', handleHeroTouchMove, { passive: true });
+  container.addEventListener('touchend', handleHeroTouchEnd, { passive: true });
+  
+  // Arrow buttons
+  const prevBtn = document.getElementById('heroPrev');
+  const nextBtn = document.getElementById('heroNext');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => navigateHero(-1));
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => navigateHero(1));
+  }
+  
+  // Dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      heroCurrentIndex = index;
+      updateHeroSlide();
+    });
+  });
+}
+
+// Touch handlers - EXACT COPY FROM PRODUCT PAGE
+function handleHeroTouchStart(e) {
+  heroTouchStartX = e.touches[0].clientX;
+  heroTouchEndX = heroTouchStartX;
+  heroIsSwiping = false;
+}
+
+function handleHeroTouchMove(e) {
+  heroTouchEndX = e.touches[0].clientX;
+  const diff = Math.abs(heroTouchStartX - heroTouchEndX);
+  if (diff > 10) {
+    heroIsSwiping = true;
+  }
+}
+
+function handleHeroTouchEnd(e) {
+  if (!heroIsSwiping) return;
+  
+  const swipeThreshold = 50;
+  const diff = heroTouchStartX - heroTouchEndX;
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      // Swiped left - check for swap image first
+      const currentSlide = heroSlides[heroCurrentIndex].element;
+      const swapImg = currentSlide.querySelector('.hero-slide-swap');
+      
+      if (swapImg && !swapImg.classList.contains('visible')) {
+        // Show swap image
+        swapImg.classList.add('visible');
+      } else {
+        // Next slide
+        navigateHero(1);
+      }
+    } else {
+      // Swiped right - check if swap is visible
+      const currentSlide = heroSlides[heroCurrentIndex].element;
+      const swapImg = currentSlide.querySelector('.hero-slide-swap');
+      
+      if (swapImg && swapImg.classList.contains('visible')) {
+        // Hide swap image
+        swapImg.classList.remove('visible');
+      } else {
+        // Previous slide
+        navigateHero(-1);
+      }
+    }
+  }
+  
+  setTimeout(() => {
+    heroIsSwiping = false;
+  }, 100);
+}
+
+function navigateHero(direction) {
+  if (heroSlides.length === 0) return;
+  
+  heroCurrentIndex += direction;
+  
+  // Loop around
+  if (heroCurrentIndex < 0) {
+    heroCurrentIndex = heroSlides.length - 1;
+  } else if (heroCurrentIndex >= heroSlides.length) {
+    heroCurrentIndex = 0;
+  }
+  
+  updateHeroSlide();
+}
+
+function updateHeroSlide() {
+  const slides = document.querySelectorAll('.hero-image-slide');
+  const counter = document.getElementById('heroCounter');
+  const dots = document.querySelectorAll('.hero-dot');
+  
+  slides.forEach((slide, index) => {
+    if (index === heroCurrentIndex) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+      // Reset swap images on inactive slides
+      const swapImg = slide.querySelector('.hero-slide-swap');
+      if (swapImg) {
+        swapImg.classList.remove('visible');
+      }
+    }
+  });
+  
+  if (counter) {
+    counter.textContent = `${heroCurrentIndex + 1} / ${heroSlides.length}`;
+  }
+  
+  dots.forEach((dot, index) => {
+    if (index === heroCurrentIndex) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+}
+</script>
+
+{% schema %}
+{
+  "name": "Hero Premium Designs",
+  "settings": [
+    {
+      "type": "select",
+      "id": "hero_style",
+      "label": "Hero Layout Style",
+      "options": [
+        {"value": "minimal-split", "label": "Minimal Split"},
+        {"value": "centered-card", "label": "Centered Card"},
+        {"value": "cinematic", "label": "Cinematic"}
+      ],
+      "default": "minimal-split"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_badge",
+      "label": "Badge Text"
+    },
+    {
+      "type": "url",
+      "id": "hero_badge_link",
+      "label": "Badge Link"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_heading",
+      "label": "Main Heading",
+      "default": "Timeless Elegance"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "hero_button_text",
+      "label": "Primary Button Text",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "hero_button_secondary_text",
+      "label": "Secondary Button Text"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_secondary_link",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_indicators",
+      "label": "Show Trust Indicators",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_indicator",
+      "label": "Show Scroll Indicator",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swap_hint",
+      "label": "Show Swipe Hint",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "carousel_slide",
+      "name": "Carousel Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "slide_image",
+          "label": "Primary Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "slide_image_swap",
+          "label": "Alternate Image (Swipe to compare)"
+        },
+        {
+          "type": "url",
+          "id": "slide_link",
+          "label": "Slide Link (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "slide_caption",
+          "label": "Caption (Optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{"name": "Hero Premium Designs"}]
+}
+{% endschema %}

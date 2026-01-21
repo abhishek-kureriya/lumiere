@@ -1,0 +1,93 @@
+<section class="lumiere-rating">
+  <div class="lumiere-rating__container">
+    
+    <div class="lumiere-stars" aria-label="Customer rating">
+      ★★★★★
+    </div>
+
+    <div class="lumiere-rating-text">
+      <strong>{{ section.settings.rating_score }}</strong>
+      <span>{{ section.settings.rating_based_on }}</span>
+    </div>
+
+    <p class="lumiere-rating-subtext">
+      {{ section.settings.subtext }}
+    </p>
+
+  </div>
+</section>
+
+<style>
+.lumiere-rating {
+  padding: 60px 20px;
+  text-align: center;
+  background: {{ section.settings.background_color }};
+}
+
+.lumiere-rating__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.lumiere-stars {
+  font-size: 28px;
+  letter-spacing: 6px;
+  color: #D4AF37; /* Luxe gold */
+  margin-bottom: 10px;
+}
+
+.lumiere-rating-text {
+  font-size: 18px;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.lumiere-rating-text strong {
+  font-weight: 600;
+}
+
+.lumiere-rating-subtext {
+  font-size: 15px;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Lumiere Rating",
+  "settings": [
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating text",
+      "default": "4.8/5"
+    },
+    {
+      "type": "text",
+      "id": "rating_based_on",
+      "label": "Based on text",
+      "default": "Based on 1,200+ happy customers"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Sub text",
+      "default": "Loved for quality, elegance & everyday wear"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rating Trust Section",
+      "category": "Lumiere"
+    }
+  ]
+}
+{% endschema %}

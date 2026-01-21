@@ -1,0 +1,330 @@
+{% comment %}
+===========================================
+LUMIERE FOOTER - WITH PAYMENT TRUST BADGES
+Updated version with payment icons below copyright
+===========================================
+{% endcomment %}
+
+<footer class="lumiere-footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section footer-brand">
+        <h4 class="footer-title">{{ section.settings.footer_brand_title | default: shop.name }}</h4>
+        <p class="footer-description">{{ section.settings.footer_brand_description }}</p>
+     
+        {%- comment -%} Social Media Icons {%- endcomment -%}
+        {%- if section.settings.show_social_icons -%}
+          <div class="footer-social">
+            {%- if section.settings.social_facebook_link != blank -%}
+              <a href="{{ section.settings.social_facebook_link }}" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.social_instagram_link != blank -%}
+              <a href="{{ section.settings.social_instagram_link }}" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.social_pinterest_link != blank -%}
+              <a href="{{ section.settings.social_pinterest_link }}" target="_blank" rel="noopener" aria-label="Pinterest">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                </svg>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.social_twitter_link != blank -%}
+              <a href="{{ section.settings.social_twitter_link }}" target="_blank" rel="noopener" aria-label="Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">{{ section.settings.quick_links_title | default: 'Quick Links' }}</h4>
+        <ul class="footer-links">
+          {%- for link in linklists[section.settings.quick_links_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">{{ section.settings.customer_care_title | default: 'Customer Care' }}</h4>
+        <ul class="footer-links">
+          {%- for link in linklists[section.settings.customer_care_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">{{ section.settings.contact_title | default: 'Connect' }}</h4>
+        <ul class="footer-contact">
+          {%- if section.settings.footer_email != blank -%}
+            <li><span class="contact-icon">📧</span> <a href="mailto:{{ section.settings.footer_email }}">{{ section.settings.footer_email }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.footer_phone != blank -%}
+            <li><span class="contact-icon">📞</span> <a href="tel:{{ section.settings.footer_phone }}">{{ section.settings.footer_phone }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.footer_address != blank -%}
+            <li><span class="contact-icon">📍</span> <span>{{ section.settings.footer_address }}</span></li>
+          {%- endif -%}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    </div>
+
+    {%- if section.settings.show_payment_badges -%}
+      <div class="footer-payment-section">
+        <div class="footer-payment-wrapper">
+          {%- if section.settings.payment_heading != blank -%}
+            <p class="payment-heading">{{ section.settings.payment_heading }}</p>
+          {%- endif -%}
+          
+          <div class="payment-icons">
+            {%- if section.settings.payment_badge_image != blank -%}
+              {%- comment -%} Custom payment badge image (Stripe, etc.) {%- endcomment -%}
+              {{ section.settings.payment_badge_image | image_url: width: 600 | image_tag: class: 'payment-custom-image', alt: 'Secure payment methods', loading: 'lazy' }}
+            {%- else -%}
+              {%- comment -%} Default Shopify payment icons {%- endcomment -%}
+              {%- for type in shop.enabled_payment_types -%}
+                {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+          
+          {%- if section.settings.trust_text != blank -%}
+            <p class="trust-text">{{ section.settings.trust_text }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</footer>
+
+<style>
+.lumiere-footer { background: #1a1a1a; color: #fff; padding: 4rem 5% 2rem; }
+.footer-container { max-width: 1400px; margin: 0 auto; }
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-title {
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+.footer-description { color: #ccc; line-height: 1.8; margin-bottom: 1.5rem; }
+.footer-social { display: flex; gap: 1.2rem; margin-top: 1rem; }
+.footer-social a {
+  color: #ccc;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.footer-social a:hover { color: #d4af37; transform: translateY(-3px); }
+.footer-links { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 0.8rem; }
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+.footer-links a:hover { color: #d4af37; padding-left: 5px; }
+.footer-contact { list-style: none; padding: 0; margin: 0; }
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  color: #ccc;
+}
+.footer-contact a { color: #ccc; text-decoration: none; transition: color 0.3s ease; }
+.footer-contact a:hover { color: #d4af37; }
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid #333;
+  text-align: center;
+  color: #888;
+}
+
+/* ============================================
+   PAYMENT TRUST BADGES SECTION
+   ============================================ */
+
+.footer-payment-section {
+  width: 100%;
+  padding: 1.5rem 0 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-payment-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.payment-heading {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  font-weight: 500;
+}
+
+.payment-icons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px; /* Increased from 8px */
+  max-width: 100%;
+}
+
+/* Default Shopify payment icons - white color */
+.payment-icon {
+  height: 32px; /* Increased from 24px */
+  width: auto;
+  opacity: 0.7; /* Increased from 0.6 */
+  transition: opacity 0.3s ease;
+  filter: brightness(0) invert(1); /* Makes icons white */
+}
+
+.payment-icon:hover {
+  opacity: 1; /* Full opacity on hover */
+}
+
+/* Custom payment badge image (like Stripe badge) */
+.payment-custom-image {
+  max-height: 50px; /* Increased from 35px */
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.9; /* Increased from 0.8 */
+}
+
+.trust-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .lumiere-footer { padding: 3rem 5% 1.5rem; }
+  .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+  
+  .footer-payment-section {
+    padding: 1.2rem 0 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  .payment-heading {
+    font-size: 0.7rem; /* Increased from 0.65rem */
+  }
+
+  .payment-icon {
+    height: 26px; /* Increased from 20px */
+  }
+
+  .payment-custom-image {
+    max-height: 40px; /* Increased from 28px */
+  }
+
+  .trust-text {
+    font-size: 0.65rem; /* Increased from 0.6rem */
+    padding: 0 1rem;
+  }
+
+  .payment-icons {
+    gap: 10px; /* Increased from 6px */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-payment-section {
+    padding: 1rem 0 0.6rem;
+  }
+
+  .payment-icon {
+    height: 24px; /* Increased from 18px */
+  }
+
+  .payment-custom-image {
+    max-height: 36px; /* Increased from 24px */
+  }
+
+  .payment-icons {
+    gap: 8px; /* Increased from 5px */
+  }
+
+  .payment-heading {
+    font-size: 0.65rem; /* Increased from 0.6rem */
+  }
+
+  .trust-text {
+    font-size: 0.6rem; /* Increased from 0.55rem */
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Lumiere Footer",
+  "settings": [
+    {"type": "header", "content": "Brand Section"},
+    {"type": "text", "id": "footer_brand_title", "label": "Brand Title", "default": "LUMIÈRE"},
+    {"type": "textarea", "id": "footer_brand_description", "label": "Brand Description", "default": "Crafting timeless pieces that celebrate life's precious moments."},
+    {"type": "checkbox", "id": "show_social_icons", "label": "Show Social Media Icons", "default": true},
+    {"type": "text", "id": "social_instagram_link", "label": "Instagram URL", "info": "Your Instagram profile link"},
+    {"type": "text", "id": "social_facebook_link", "label": "Facebook URL", "info": "Your Facebook profile link"},
+    {"type": "header", "content": "Quick Links"},
+    {"type": "text", "id": "quick_links_title", "label": "Title", "default": "Quick Links"},
+    {"type": "link_list", "id": "quick_links_menu", "label": "Menu"},
+    {"type": "header", "content": "Customer Care"},
+    {"type": "text", "id": "customer_care_title", "label": "Title", "default": "Customer Care"},
+    {"type": "link_list", "id": "customer_care_menu", "label": "Menu"},
+    {"type": "header", "content": "Contact Information"},
+    {"type": "text", "id": "contact_title", "label": "Title", "default": "Connect"},
+    {"type": "text", "id": "footer_email", "label": "Email"},
+    {"type": "text", "id": "footer_phone", "label": "Phone"},
+    {"type": "textarea", "id": "footer_address", "label": "Address"},
+    {"type": "header", "content": "💳 Payment Trust Badges"},
+    {"type": "checkbox", "id": "show_payment_badges", "label": "Show Payment Badges", "default": true, "info": "Display payment icons below copyright"},
+    {"type": "text", "id": "payment_heading", "label": "Heading (Optional)", "default": "Secure Payment", "info": "e.g., 'Secure Payment' or 'We Accept'. Clear this field to hide heading."},
+    {"type": "image_picker", "id": "payment_badge_image", "label": "Custom Payment Badge", "info": "Upload Stripe badge or combined payment logos. Leave empty for automatic Shopify payment icons."},
+    {"type": "text", "id": "trust_text", "label": "Trust Text (Optional)", "default": "100% Secure Checkout", "info": "e.g., '100% Secure Checkout' or 'SSL Encrypted'. Clear this field to hide text."}
+  ],
+  "presets": [
+    {
+      "name": "Lumiere Footer",
+      "category": "Lumiere"
+    }
+  ]
+}
+{% endschema %}

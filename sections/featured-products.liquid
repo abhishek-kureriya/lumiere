@@ -1,0 +1,586 @@
+{% comment %}
+===========================================
+FEATURED JEWELRY - THEME MATCHED & OPTIMIZED
+- Matches website theme (golden blush pink)
+- Uses Playfair Display + Montserrat fonts
+- Fixed image cropping with contain
+- Mobile optimized spacing
+===========================================
+{% endcomment %}
+
+<section class="featured-jewelry">
+  <div class="featured-container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="product-grid">
+      {%- assign featured_collection = collections[section.settings.collection] -%}
+      {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
+        <div class="product-card">
+          <a href="{{ product.url }}" class="product-link">
+            <div class="product-image-wrapper">
+              {%- if product.featured_image -%}
+                {{ product.featured_image | image_url: width: 600 | image_tag: alt: product.title, class: 'product-image', loading: 'lazy' }}
+                {%- if product.images[1] -%}
+                  {{ product.images[1] | image_url: width: 600 | image_tag: alt: product.title, class: 'product-image-hover', loading: 'lazy' }}
+                {%- endif -%}
+              {%- else -%}
+                <div class="product-placeholder"><span class="placeholder-icon">💎</span></div>
+              {%- endif -%}
+              {%- if product.compare_at_price > product.price -%}
+                <span class="product-badge">Sale</span>
+              {%- endif -%}
+            </div>
+            
+            <div class="product-info">
+              <h3 class="product-name">{{ product.title }}</h3>
+              <div class="product-price">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="price-sale">{{ product.price | money }}</span>
+                  <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                {%- else -%}
+                  <span class="price-regular">{{ product.price | money }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+    
+    {%- if section.settings.show_view_all -%}
+      <div class="view-all-wrapper">
+        <a href="{{ featured_collection.url }}" class="view-all-btn">
+          {{ section.settings.button_text | default: "View All Products" }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+/* ============================================
+   FEATURED JEWELRY SECTION - THEME MATCHED
+   ============================================ */
+
+.featured-jewelry {
+  padding: 5rem 5%;
+  background: #FEFDFB; /* Match collection showcase */
+  position: relative;
+}
+
+/* Subtle background texture to match collection showcase */
+.featured-jewelry::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.featured-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   SECTION HEADER - MATCHES COLLECTION SHOWCASE
+   ============================================ */
+
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #2C2C2C;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: #666;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ============================================
+   PRODUCT GRID
+   ============================================ */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+/* ============================================
+   PRODUCT CARD - REFINED STYLING
+   ============================================ */
+
+.product-card {
+  background: white;
+  border-radius: 4px; /* Minimal rounding like collection cards */
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+}
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* ============================================
+   IMAGE WRAPPER - FIXED CROPPING
+   ============================================ */
+
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 Square aspect ratio */
+  background: #F8F8F8;
+  overflow: hidden;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Shows full product without cropping */
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  padding: 1rem;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-image-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.product-card:hover .product-image-hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.product-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #F5F5F5, #E8E8E8);
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  opacity: 0.3;
+}
+
+/* Sale Badge - Golden Blush Pink Theme */
+.product-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #D4AF37, #F4C2C2);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  z-index: 2;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* ============================================
+   PRODUCT INFO
+   ============================================ */
+
+.product-info {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.product-name {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.8rem;
+  color: #1A1A1A;
+  transition: color 0.3s ease;
+  line-height: 1.4;
+  min-height: 2.8rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-card:hover .product-name {
+  color: #D4AF37; /* Golden on hover */
+}
+
+.product-price {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.price-regular,
+.price-sale {
+  color: #D4AF37; /* Golden price */
+}
+
+.price-compare {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+/* ============================================
+   VIEW ALL BUTTON - GOLDEN BLUSH PINK THEME
+   ============================================ */
+
+.view-all-wrapper {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.view-all-btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #D4AF37, #F4C2C2);
+  color: #FEFDFB;
+  border: 2px solid transparent;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.view-all-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #F4C2C2, #D4AF37);
+  transition: left 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: -1;
+}
+
+.view-all-btn:hover::before {
+  left: 0;
+}
+
+.view-all-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+/* ============================================
+   TABLET RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+
+  .product-name {
+    font-size: 0.95rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE - OPTIMIZED
+   ============================================ */
+
+@media (max-width: 768px) {
+  .featured-jewelry {
+    padding: 2.5rem 4%; /* Reduced from 3rem */
+  }
+
+  .section-title {
+    font-size: 1.5rem; /* Match collection showcase */
+    letter-spacing: 0.02em;
+    margin-bottom: 0.6rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* 2 columns on mobile */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem; /* Tighter like collection showcase */
+    margin-top: 1.5rem; /* Reduced */
+  }
+
+  .product-card {
+    border-radius: 3px;
+  }
+
+  .product-image-wrapper {
+    padding-top: 100%;
+  }
+
+  .product-image,
+  .product-image-hover {
+    padding: 0.5rem;
+  }
+
+  .product-badge {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.6rem;
+    border-radius: 15px;
+  }
+
+  .product-info {
+    padding: 0.8rem 0.5rem;
+  }
+
+  .product-name {
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    min-height: 2.2rem;
+    line-height: 1.3;
+  }
+
+  .product-price {
+    font-size: 0.85rem;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .price-compare {
+    font-size: 0.75rem;
+  }
+
+  .view-all-wrapper {
+    margin-top: 2rem;
+  }
+
+  .view-all-btn {
+    padding: 0.9rem 2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* ============================================
+   SMALL MOBILE
+   ============================================ */
+
+@media (max-width: 480px) {
+  .featured-jewelry {
+    padding: 2rem 3%; /* Further reduced */
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+  }
+
+  .section-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .product-grid {
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .product-card {
+    border-radius: 3px;
+  }
+
+  .product-image,
+  .product-image-hover {
+    padding: 0.3rem;
+  }
+
+  .product-info {
+    padding: 0.6rem 0.4rem;
+  }
+
+  .product-name {
+    font-size: 0.75rem;
+    min-height: 2rem;
+  }
+
+  .product-price {
+    font-size: 0.8rem;
+  }
+
+  .price-compare {
+    font-size: 0.7rem;
+  }
+
+  .product-badge {
+    font-size: 0.55rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
+/* ============================================
+   HOVER EFFECTS - DESKTOP ONLY
+   ============================================ */
+
+@media (hover: hover) {
+  .product-card:hover .product-image-hover {
+    opacity: 1;
+  }
+  
+  .product-card:hover .product-image {
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.product-link:focus {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+.view-all-btn:focus {
+  outline: 2px solid #D4AF37;
+  outline-offset: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .product-image,
+  .product-image-hover,
+  .product-name,
+  .view-all-btn {
+    transition: none;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Featured Jewelry Premium",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Pieces"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle (Optional)",
+      "info": "Brief description below heading"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All Products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Jewelry Premium"
+    }
+  ]
+}
+{% endschema %}

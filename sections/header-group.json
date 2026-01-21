@@ -1,0 +1,134 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header_section": {
+      "type": "header",
+      "blocks": {
+        "header-logo": {
+          "type": "_header-logo",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "hide_logo_on_home_page": false,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "header-menu": {
+          "type": "_header-menu",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "menu": "customer-account-main-menu",
+            "color_scheme": "scheme-4",
+            "type_font_primary_size": "1.125rem",
+            "menu_font_style": "inverse",
+            "type_font_primary_link": "body",
+            "type_case_primary_link": "none",
+            "menu_style": "text",
+            "featured_products_aspect_ratio": "4 / 5",
+            "featured_collections_aspect_ratio": "16 / 9",
+            "image_border_radius": 0,
+            "navigation_bar": true,
+            "color_scheme_navigation_bar": "",
+            "drawer_accordion": true,
+            "drawer_accordion_expand_first": true,
+            "drawer_dividers": true
+          },
+          "blocks": {}
+        }
+      },
+      "disabled": true,
+      "settings": {
+        "logo_position": "left",
+        "menu_position": "center",
+        "menu_row": "top",
+        "show_search": true,
+        "search_position": "right",
+        "search_row": "top",
+        "show_country": true,
+        "country_selector_style": false,
+        "show_language": true,
+        "localization_font": "heading",
+        "localization_font_size": "1rem",
+        "localization_position": "right",
+        "localization_row": "top",
+        "section_width": "page-width",
+        "section_height": "standard",
+        "enable_sticky_header": "always",
+        "divider_width": 0,
+        "divider_size": "page-width",
+        "border_width": 0,
+        "color_scheme_top": "scheme-1",
+        "color_scheme_bottom": "",
+        "color_scheme_transparent": "scheme-6",
+        "enable_transparent_header_home": false,
+        "home_color_scheme": "default",
+        "enable_transparent_header_product": false,
+        "product_color_scheme": "default",
+        "enable_transparent_header_collection": false,
+        "collection_color_scheme": "default"
+      }
+    },
+    "header_lumiere_qnTLNh": {
+      "type": "header-lumiere",
+      "name": "lumiere-header",
+      "settings": {
+        "logo": "shopify://shop_images/FaviconShopify.png",
+        "logo_text": "LUMIÈRE",
+        "main_menu": "main-menu",
+        "header_transparent": false,
+        "show_search": true
+      }
+    },
+    "header_announcements_rPJPLR": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_MzpHpW": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Shop our latest arrivals!",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_MzpHpW"
+      ],
+      "disabled": true,
+      "name": "t:names.announcement_bar",
+      "settings": {
+        "speed": 5,
+        "section_width": "page-width",
+        "color_scheme": "",
+        "divider_width": 0,
+        "padding-block-start": 15,
+        "padding-block-end": 15
+      }
+    }
+  },
+  "order": [
+    "header_section",
+    "header_lumiere_qnTLNh",
+    "header_announcements_rPJPLR"
+  ]
+}

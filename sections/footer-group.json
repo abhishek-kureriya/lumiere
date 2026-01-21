@@ -1,0 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "lumiere_footer_DQitXf": {
+      "type": "lumiere-footer",
+      "name": "Lumiere Footer",
+      "settings": {
+        "footer_brand_title": "LUMIÈRE",
+        "footer_brand_description": "Discover jewelry that tells your story",
+        "show_social_icons": true,
+        "social_instagram_link": "https://www.instagram.com/shoplumiere.in",
+        "social_facebook_link": "https://www.facebook.com/profile.php?id=61584597013209",
+        "quick_links_title": "Quick Links",
+        "quick_links_menu": "main-menu",
+        "customer_care_title": "Customer Care",
+        "customer_care_menu": "footer",
+        "contact_title": "Connect",
+        "footer_email": "hello@shoplumiere.in",
+        "footer_phone": "",
+        "footer_address": "Shop-01 Plot 32 Suraj Kunj BHEL, Bhopal, Madhya Pradesh, India",
+        "show_payment_badges": true,
+        "payment_heading": "Secure Payment",
+        "payment_badge_image": "shopify://shop_images/3C6DD47B-8AEA-4F62-9258-A4F7F008FCAD.jpg",
+        "trust_text": "100% Secure Checkout"
+      }
+    }
+  },
+  "order": [
+    "lumiere_footer_DQitXf"
+  ]
+}

@@ -1,0 +1,160 @@
+{% comment %}
+  LUMIÈRE – Testimonials slider
+  File: sections/testimonials-lumiere.liquid
+{% endcomment %}
+
+<section class="lum-test lum-test-{{ section.id }}">
+  {% if section.settings.heading != blank %}
+    <h2 class="lum-test__heading">{{ section.settings.heading }}</h2>
+  {% endif %}
+
+  <slider-component class="lum-test__slider">
+    <div class="lum-test__track">
+      {% for block in section.blocks %}
+        <div class="lum-test__slide" {{ block.shopify_attributes }}>
+          <div class="lum-test__card">
+            {% if block.settings.rating > 0 %}
+              <div class="lum-test__stars">
+                {% for i in (1..block.settings.rating) %}
+                  ★
+                {% endfor %}
+              </div>
+            {% endif %}
+            <p class="lum-test__quote">“{{ block.settings.quote }}”</p>
+            <p class="lum-test__name">— {{ block.settings.name }}</p>
+            {% if block.settings.detail != blank %}
+              <p class="lum-test__detail">{{ block.settings.detail }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="lum-test__controls">
+      <button class="lum-test__prev" type="button" aria-label="Previous">‹</button>
+      <button class="lum-test__next" type="button" aria-label="Next">›</button>
+    </div>
+  </slider-component>
+</section>
+
+<style>
+  .lum-test-{{ section.id }} {
+    padding: 60px 20px;
+    background: #fff9f3;
+    text-align: center;
+  }
+  .lum-test-{{ section.id }} .lum-test__heading {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(24px, 2.6vw, 30px);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 0 0 24px;
+  }
+  .lum-test-{{ section.id }} .lum-test__slider {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .lum-test-{{ section.id }} .lum-test__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+  .lum-test-{{ section.id }} .lum-test__slide {
+    min-width: 100%;
+    scroll-snap-align: center;
+    padding: 0 6px;
+  }
+  .lum-test-{{ section.id }} .lum-test__card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 26px 24px 24px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+  }
+  .lum-test-{{ section.id }} .lum-test__stars {
+    color: #d4af37;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .lum-test-{{ section.id }} .lum-test__quote {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    margin: 0 0 12px;
+  }
+  .lum-test-{{ section.id }} .lum-test__name {
+    font-weight: 600;
+    margin: 0 0 2px;
+  }
+  .lum-test-{{ section.id }} .lum-test__detail {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 0;
+  }
+  .lum-test-{{ section.id }} .lum-test__controls {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .lum-test-{{ section.id }} .lum-test__prev,
+  .lum-test-{{ section.id }} .lum-test__next {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid #d4af37;
+    background: transparent;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.lum-test-{{ section.id }} .lum-test__slider');
+    if (!slider) return;
+    const track = slider.querySelector('.lum-test__track');
+    const slides = slider.querySelectorAll('.lum-test__slide');
+    let index = 0;
+
+    function goTo(i) {
+      index = (i + slides.length) % slides.length;
+      track.scrollTo({
+        left: slides[index].offsetLeft,
+        behavior: 'smooth'
+      });
+    }
+
+    slider.querySelector('.lum-test__prev').addEventListener('click', () => goTo(index - 1));
+    slider.querySelector('.lum-test__next').addEventListener('click', () => goTo(index + 1));
+  });
+</script>
+
+{% schema %}
+{
+  "name": "LUMIERE – Testimonials",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by our customers" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "text", "id": "quote", "label": "Quote", "default": "The quality and finishing is beautiful – light enough for all-day wear but still looks luxe." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Customer name" },
+        { "type": "text", "id": "detail", "label": "Extra detail (city / product)", "default": "Bangalore, India" },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating (stars)",
+          "min": 0, "max": 5, "step": 1, "default": 5
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    { "name": "LUMIERE – Testimonials slider", "category": "Lumiere" }
+  ]
+}
+{% endschema %}
