@@ -51,17 +51,17 @@ jobs:
 
       - name: Deploy theme
         env:
-          SHOPIFY_STORE: ${{ env.SHOPIFY_STORE }}
+          SHOPIFY_FLAG_STORE: ${{ env.SHOPIFY_STORE }}
           SHOPIFY_CLIENT_ID: ${{ env.SHOPIFY_CLIENT_ID }}
           SHOPIFY_CLIENT_SECRET: ${{ env.SHOPIFY_CLIENT_SECRET }}
           THEME_NAME: ${{ steps.theme-config.outputs.theme_name }}
           PUBLISH_FLAG: ${{ steps.theme-config.outputs.publish_flag }}
         run: |
-          echo "Deploying theme to store: $SHOPIFY_STORE"
+          echo "Deploying theme to store: $SHOPIFY_FLAG_STORE"
           echo "Theme: $THEME_NAME"
           echo "Branch: ${{ github.ref_name }}"
           
-          if [ -z "$SHOPIFY_STORE" ] || [ -z "$SHOPIFY_CLIENT_ID" ] || [ -z "$SHOPIFY_CLIENT_SECRET" ]; then
+          if [ -z "$SHOPIFY_FLAG_STORE" ] || [ -z "$SHOPIFY_CLIENT_ID" ] || [ -z "$SHOPIFY_CLIENT_SECRET" ]; then
             echo "Missing required Shopify credentials. Aborting." >&2
             exit 1
           fi
