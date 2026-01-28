@@ -82,40 +82,10 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
       
       <form action="/cart/add" method="post" id="productForm">
         <input type="hidden" name="id" id="variantId" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="quantity" value="1" id="hiddenQtyInput">
         
-        {%- unless product.has_only_default_variant -%}
-          {%- for option in product.options_with_values -%}
-            <div class="option-group">
-              <label class="option-title">{{ option.name }}</label>
-              <div class="option-buttons">
-                {%- for value in option.values -%}
-                  <input 
-                    type="radio" 
-                    name="option-{{ option.name | handle }}"
-                    value="{{ value }}"
-                    id="opt-{{ option.name | handle }}-{{ value | handle }}"
-                    data-option-position="{{ option.position }}"
-                    {% if option.selected_value == value %}checked{% endif %}
-                    onchange="updateVariant()">
-                  <label for="opt-{{ option.name | handle }}-{{ value | handle }}" class="option-btn">
-                    {{ value }}
-                  </label>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endfor -%}
-        {%- endunless -%}
-
-        <div class="quantity-group">
-          <label class="option-title">Quantity</label>
-          <div class="qty-selector">
-            <button type="button" class="qty-btn" onclick="updateQty(-1)">−</button>
-            <input type="number" name="quantity" value="1" min="1" class="qty-input" id="qtyInput">
-            <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
-          </div>
-        </div>
-
-        <div class="action-buttons">
+        {%- comment -%} Action Buttons - Shown first on mobile {%- endcomment -%}
+        <div class="action-buttons mobile-priority">
           <button type="submit" class="btn-add-cart" id="addToCartBtn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="9" cy="21" r="1"></circle>
@@ -128,6 +98,98 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
             BUY IT NOW
           </button>
         </div>
+
+        {%- comment -%} Product Options - Accordion on mobile {%- endcomment -%}
+        <div class="product-options-accordion">
+          <details class="option-accordion">
+            <summary class="accordion-header">
+              <span class="accordion-title">Product Options & Details</span>
+              <svg class="accordion-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+              </svg>
+            </summary>
+            <div class="accordion-content">
+              
+              {%- unless product.has_only_default_variant -%}
+                {%- for option in product.options_with_values -%}
+                  <div class="option-group">
+                    <label class="option-title">{{ option.name }}</label>
+                    <div class="option-buttons">
+                      {%- for value in option.values -%}
+                        <input 
+                          type="radio" 
+                          name="option-{{ option.name | handle }}"
+                          value="{{ value }}"
+                          id="opt-{{ option.name | handle }}-{{ value | handle }}"
+                          data-option-position="{{ option.position }}"
+                          {% if option.selected_value == value %}checked{% endif %}
+                          onchange="updateVariant()">
+                        <label for="opt-{{ option.name | handle }}-{{ value | handle }}" class="option-btn">
+                          {{ value }}
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endfor -%}
+              {%- endunless -%}
+
+              <div class="quantity-group">
+                <label class="option-title">Quantity</label>
+                <div class="qty-selector">
+                  <button type="button" class="qty-btn" onclick="updateQty(-1)">−</button>
+                  <input type="number" value="1" min="1" class="qty-input" id="qtyInput" onchange="syncQuantity()">
+                  <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
+                </div>
+              </div>
+              
+              {%- comment -%} Product Metadata {%- endcomment -%}
+              <div class="product-metadata">
+                {%- if product.selected_or_first_available_variant.sku != blank -%}
+                  <div class="meta-item">
+                    <span class="meta-label">SKU:</span>
+                    <span class="meta-value" id="variantSku">{{ product.selected_or_first_available_variant.sku }}</span>
+                  </div>
+                {%- endif -%}
+                
+                {%- if product.vendor != blank -%}
+                  <div class="meta-item">
+                    <span class="meta-label">Vendor:</span>
+                    <span class="meta-value">{{ product.vendor }}</span>
+                  </div>
+                {%- endif -%}
+                
+                {%- if product.type != blank -%}
+                  <div class="meta-item">
+                    <span class="meta-label">Type:</span>
+                    <span class="meta-value">{{ product.type }}</span>
+                  </div>
+                {%- endif -%}
+                
+                {%- if product.selected_or_first_available_variant.barcode != blank -%}
+                  <div class="meta-item">
+                    <span class="meta-label">Barcode:</span>
+                    <span class="meta-value">{{ product.selected_or_first_available_variant.barcode }}</span>
+                  </div>
+                {%- endif -%}
+                
+                {%- if product.selected_or_first_available_variant.weight > 0 -%}
+                  <div class="meta-item">
+                    <span class="meta-label">Weight:</span>
+                    <span class="meta-value">{{ product.selected_or_first_available_variant.weight | weight_with_unit: product.selected_or_first_available_variant.weight_unit }}</span>
+                  </div>
+                {%- endif -%}
+                
+                <div class="meta-item">
+                  <span class="meta-label">Availability:</span>
+                  <span class="meta-value {% if product.available %}in-stock{% else %}out-stock{% endif %}">
+                    {% if product.available %}In Stock{% else %}Out of Stock{% endif %}
+                  </span>
+                </div>
+              </div>
+              
+            </div>
+          </details>
+        </div>
       </form>
 
       {%- if product.description != blank -%}
@@ -136,6 +198,58 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
         </div>
       {%- endif -%}
 
+    </div>
+  </div>
+  
+  {%- comment -%} Trust Badges Section {%- endcomment -%}
+  <div class="trust-badges-section">
+    <div class="trust-badges-container">
+      <div class="trust-badge-item">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>Secure Payment</span>
+      </div>
+      <div class="trust-badge-item">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+          <line x1="1" y1="10" x2="23" y2="10"></line>
+        </svg>
+        <span>Safe Checkout</span>
+      </div>
+      <div class="trust-badge-item">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>Free Shipping</span>
+      </div>
+      <div class="trust-badge-item">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <polyline points="1 20 1 14 7 14"></polyline>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
+        <span>Easy Returns</span>
+      </div>
+    </div>
+    
+    {%- comment -%} Payment Icons {%- endcomment -%}
+    <div class="payment-icons">
+      <span class="payment-label">We Accept:</span>
+      {%- if section.settings.payment_badges != blank -%}
+        <img 
+          src="{{ section.settings.payment_badges | img_url: '600x' }}" 
+          alt="Accepted payment methods" 
+          class="custom-payment-image"
+          loading="lazy">
+      {%- else -%}
+        {{ 'visa' | payment_type_svg_tag: class: 'payment-icon' }}
+        {{ 'master' | payment_type_svg_tag: class: 'payment-icon' }}
+        {{ 'american_express' | payment_type_svg_tag: class: 'payment-icon' }}
+        {{ 'paypal' | payment_type_svg_tag: class: 'payment-icon' }}
+        {{ 'discover' | payment_type_svg_tag: class: 'payment-icon' }}
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -459,9 +573,88 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
   padding: 1rem 0;
 }
 
+/* Action Buttons - Desktop position */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  order: 3; /* Show after options on desktop */
+}
+
+/* Accordion for product options */
+.product-options-accordion {
+  margin-bottom: 2rem;
+  order: 2; /* Show before buttons on desktop */
+}
+
+.option-accordion {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  overflow: visible;
+  transition: all 0.3s;
+}
+
+.option-accordion[open] {
+  border-color: #d4af37;
+}
+
+.accordion-header {
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(244,194,194,0.05));
+  transition: all 0.3s;
+  position: relative;
+}
+
+.accordion-header:hover {
+  background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(244,194,194,0.1));
+}
+
+.accordion-header::-webkit-details-marker,
+.accordion-header::marker {
+  display: none;
+  content: '';
+}
+
+.accordion-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.accordion-icon {
+  transition: transform 0.3s ease;
+  color: #d4af37;
+  flex-shrink: 0;
+}
+
+.option-accordion[open] .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding: 1.5rem;
+  display: block;
+  max-height: 2000px;
+  overflow: visible;
+}
+
 .option-group,
 .quantity-group {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.option-group:last-child,
+.quantity-group:last-child {
+  margin-bottom: 0;
 }
 
 .option-title {
@@ -542,6 +735,49 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
   display: none;
 }
 
+/* Product Metadata */
+.product-metadata {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.meta-item:last-child {
+  border-bottom: none;
+}
+
+.meta-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.meta-value {
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.meta-value.in-stock {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.meta-value.out-stock {
+  color: #dc3545;
+  font-weight: 600;
+}
+
 .action-buttons {
   display: flex;
   flex-direction: column;
@@ -602,6 +838,83 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
   line-height: 1.7;
   color: #555;
   font-size: 0.95rem;
+}
+
+/* ============================================
+   TRUST BADGES SECTION
+   ============================================ */
+
+.trust-badges-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 5%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.trust-badges-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.trust-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.8rem;
+}
+
+.trust-badge-item svg {
+  color: #d4af37;
+  stroke-width: 1.5;
+}
+
+.trust-badge-item span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+.payment-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.payment-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 0.5rem;
+}
+
+.payment-icon {
+  height: 30px;
+  width: auto;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.payment-icon:hover {
+  opacity: 1;
+}
+
+.custom-payment-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 40px;
+  object-fit: contain;
 }
 
 /* ============================================
@@ -699,6 +1012,105 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
     height: 400px;
   }
   
+  /* Mobile-optimized layout: Images → Buttons → Options accordion */
+  .product-info-section {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .action-buttons {
+    order: 1; /* Show first on mobile (after images) */
+    margin-bottom: 1.5rem;
+    flex-direction: row; /* Side by side on mobile */
+    gap: 0.8rem;
+  }
+  
+  .product-options-accordion {
+    order: 2; /* Show second on mobile */
+    margin-bottom: 1.5rem;
+  }
+  
+  .description-box {
+    order: 3; /* Show last */
+  }
+  
+  /* Make accordion more prominent on mobile */
+  .option-accordion {
+    border-color: #d4af37;
+  }
+  
+  /* Larger touch targets for mobile */
+  .accordion-header {
+    padding: 1rem 1.2rem;
+  }
+  
+  .accordion-title {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+  
+  .accordion-content {
+    padding: 1rem 1.2rem;
+  }
+  
+  .option-title {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.6rem;
+  }
+  
+  .option-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
+    min-width: 70px;
+    text-align: center;
+  }
+  
+  .qty-selector {
+    height: 55px;
+  }
+  
+  .qty-btn {
+    width: 55px;
+    font-size: 1.3rem;
+  }
+  
+  .qty-input {
+    font-size: 1.1rem;
+  }
+  
+  /* Metadata font optimization for mobile */
+  .product-metadata {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+  }
+  
+  .meta-item {
+    padding: 0.5rem 0;
+  }
+  
+  .meta-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3px;
+  }
+  
+  .meta-value {
+    font-size: 0.8rem;
+  }
+  
+  .btn-add-cart,
+  .btn-buy-now {
+    padding: 1.1rem 1rem;
+    font-size: 0.85rem;
+    flex: 1; /* Equal width */
+    white-space: nowrap;
+  }
+  
+  .btn-add-cart svg {
+    width: 16px;
+    height: 16px;
+  }
+  
   .image-nav-arrow {
     opacity: 0.7;
     width: 40px;
@@ -712,6 +1124,47 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
   .thumb-item {
     width: 70px;
     height: 70px;
+  }
+  
+  /* Trust badges responsive */
+  .trust-badges-section {
+    margin-top: 0;
+    padding: 2rem 5%;
+  }
+  
+  .trust-badges-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .trust-badge-item svg {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .trust-badge-item span {
+    font-size: 0.85rem;
+  }
+  
+  .payment-icons {
+    gap: 0.8rem;
+  }
+  
+  .payment-label {
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .payment-icon {
+    height: 25px;
+  }
+  
+  .custom-payment-image {
+    max-height: 30px;
   }
 }
 
@@ -951,6 +1404,16 @@ function updateQty(change) {
   const input = document.getElementById('qtyInput');
   const newVal = Math.max(1, parseInt(input.value) + change);
   input.value = newVal;
+  syncQuantity();
+}
+
+// Sync quantity between visible and hidden inputs
+function syncQuantity() {
+  const qtyInput = document.getElementById('qtyInput');
+  const hiddenQtyInput = document.getElementById('hiddenQtyInput');
+  if (qtyInput && hiddenQtyInput) {
+    hiddenQtyInput.value = qtyInput.value;
+  }
 }
 
 // FIXED: Zoom functions
@@ -1011,6 +1474,12 @@ function updateVariant() {
   
   if (matchingVariant) {
     document.getElementById('variantId').value = matchingVariant.id;
+    
+    // Update SKU in metadata if element exists
+    const skuElement = document.getElementById('variantSku');
+    if (skuElement && matchingVariant.sku) {
+      skuElement.textContent = matchingVariant.sku;
+    }
   }
 }
 

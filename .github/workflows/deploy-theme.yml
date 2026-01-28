@@ -1,0 +1,72 @@
+name: Deploy Shopify theme on push
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - staging
+      - '**'  # All branches
+
+jobs:
+  deploy:
+    name: Deploy theme
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      # These should be configured in repository Secrets
+      SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+      SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine theme name and deployment strategy
+        id: theme-config
+        run: |
+          BRANCH_NAME="${{ github.ref_name }}"
+          echo "Branch: $BRANCH_NAME"
+          
+          if [ "$BRANCH_NAME" = "main" ]; then
+            echo "theme_name=Radiant" >> $GITHUB_OUTPUT
+            echo "publish_flag=" >> $GITHUB_OUTPUT
+            echo "Deploying to LIVE theme: Radiant"
+          else
+            echo "theme_name=Development" >> $GITHUB_OUTPUT
+            echo "publish_flag=--unpublished" >> $GITHUB_OUTPUT
+            echo "Deploying to development theme: Development (unpublished)"
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Shopify CLI
+        run: |
+          npm install -g @shopify/cli || true
+
+      - name: Deploy theme
+        env:
+          SHOPIFY_STORE: ${{ env.SHOPIFY_STORE }}
+          SHOPIFY_PASSWORD: ${{ env.SHOPIFY_PASSWORD }}
+          THEME_NAME: ${{ steps.theme-config.outputs.theme_name }}
+          PUBLISH_FLAG: ${{ steps.theme-config.outputs.publish_flag }}
+        run: |
+          echo "Deploying theme to store: $SHOPIFY_STORE"
+          echo "Theme: $THEME_NAME"
+          echo "Branch: ${{ github.ref_name }}"
+          
+          if [ -z "$SHOPIFY_STORE" ] || [ -z "$SHOPIFY_PASSWORD" ]; then
+            echo "Missing SHOPIFY_STORE or SHOPIFY_PASSWORD secrets. Aborting." >&2
+            exit 1
+          fi
+          
+          # The CLI usage/flags can change between versions. If this command fails,
+          # update it to match your installed Shopify CLI version.
+          shopify theme push $PUBLISH_FLAG -t "$THEME_NAME" || (
+            echo "Attempting fallback with explicit store/password flags..."
+            shopify theme push --store "$SHOPIFY_STORE" --password "$SHOPIFY_PASSWORD" $PUBLISH_FLAG -t "$THEME_NAME"
+          )
