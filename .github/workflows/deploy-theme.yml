@@ -49,15 +49,6 @@ jobs:
         run: |
           npm install -g @shopify/cli || true
 
-      - name: Authenticate with Shopify
-        env:
-          SHOPIFY_FLAG_STORE: ${{ env.SHOPIFY_STORE }}
-          SHOPIFY_CLIENT_ID: ${{ env.SHOPIFY_CLIENT_ID }}
-          SHOPIFY_CLIENT_SECRET: ${{ env.SHOPIFY_CLIENT_SECRET }}
-        run: |
-          echo "Authenticating with Shopify..."
-          shopify auth login --store "$SHOPIFY_FLAG_STORE"
-
       - name: Deploy theme
         env:
           SHOPIFY_FLAG_STORE: ${{ env.SHOPIFY_STORE }}
@@ -75,8 +66,9 @@ jobs:
             exit 1
           fi
           
-          # Authenticate using client credentials and deploy
+          # Deploy theme using client credentials (no auth login needed)
           shopify theme push $PUBLISH_FLAG \
             --store "$SHOPIFY_FLAG_STORE" \
             --theme "$THEME_NAME" \
-            --json
+            --json \
+            --force
