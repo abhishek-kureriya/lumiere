@@ -49,6 +49,15 @@ jobs:
         run: |
           npm install -g @shopify/cli || true
 
+      - name: Authenticate with Shopify
+        env:
+          SHOPIFY_FLAG_STORE: ${{ env.SHOPIFY_STORE }}
+          SHOPIFY_CLIENT_ID: ${{ env.SHOPIFY_CLIENT_ID }}
+          SHOPIFY_CLIENT_SECRET: ${{ env.SHOPIFY_CLIENT_SECRET }}
+        run: |
+          echo "Authenticating with Shopify..."
+          shopify auth login --store "$SHOPIFY_FLAG_STORE"
+
       - name: Deploy theme
         env:
           SHOPIFY_FLAG_STORE: ${{ env.SHOPIFY_STORE }}
