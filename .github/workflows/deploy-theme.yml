@@ -66,5 +66,8 @@ jobs:
             exit 1
           fi
           
-          # Authenticate and deploy using client credentials
-          shopify theme push $PUBLISH_FLAG -t "$THEME_NAME"
+          # Authenticate using client credentials and deploy
+          shopify theme push $PUBLISH_FLAG \
+            --store "$SHOPIFY_FLAG_STORE" \
+            --theme "$THEME_NAME" \
+            --json
