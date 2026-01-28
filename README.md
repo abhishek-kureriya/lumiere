@@ -24,7 +24,7 @@ shopify theme push --theme <THEME_ID>
 - Create or update an unpublished development theme named "Development":
 
 ```bash
-shopify theme push --unpublished -t ""
+shopify theme push --theme "Development"
 ```
 
 - Push to an existing theme by its ID (replace the ID) and publish immediately:
@@ -252,7 +252,7 @@ A workflow is included to deploy the theme when changes are pushed to any branch
 
 Required repository secrets:
 - `SHOPIFY_STORE` — your store domain (example: `example-store.myshopify.com`)
-- `SHOPIFY_PASSWORD` — a token or password that your CLI can use for non-interactive authentication
+- `SHOPIFY_TOKEN` — Admin API access token (starts with `shpat_`)
 
 The workflow file: `.github/workflows/deploy-theme.yml`
 
