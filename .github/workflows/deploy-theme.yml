@@ -32,11 +32,13 @@ jobs:
           if [ "$BRANCH_NAME" = "main" ]; then
             echo "theme_name=Radiant" >> $GITHUB_OUTPUT
             echo "publish_flag=" >> $GITHUB_OUTPUT
+            echo "theme_flag=--theme" >> $GITHUB_OUTPUT
             echo "Deploying to LIVE theme: Radiant"
           else
             echo "theme_name=Development" >> $GITHUB_OUTPUT
-            echo "publish_flag=--unpublished" >> $GITHUB_OUTPUT
-            echo "Deploying to development theme: Development (unpublished)"
+            echo "publish_flag=" >> $GITHUB_OUTPUT
+            echo "theme_flag=--theme" >> $GITHUB_OUTPUT
+            echo "Deploying to development theme: Development (will update existing)"
           fi
 
       - name: Setup Node
@@ -54,6 +56,7 @@ jobs:
           SHOPIFY_TOKEN: ${{ env.SHOPIFY_TOKEN }}
           THEME_NAME: ${{ steps.theme-config.outputs.theme_name }}
           PUBLISH_FLAG: ${{ steps.theme-config.outputs.publish_flag }}
+          THEME_FLAG: ${{ steps.theme-config.outputs.theme_flag }}
         run: |
           echo "Deploying theme to store: $SHOPIFY_STORE"
           echo "Theme: $THEME_NAME"
@@ -65,9 +68,9 @@ jobs:
             exit 1
           fi
           
-          # Deploy using Admin API token
+          # Deploy using Admin API token (updates existing theme)
           shopify theme push $PUBLISH_FLAG \
             --store "$SHOPIFY_STORE" \
             --password "$SHOPIFY_TOKEN" \
-            --theme "$THEME_NAME" \
+            $THEME_FLAG "$THEME_NAME" \
             --force
