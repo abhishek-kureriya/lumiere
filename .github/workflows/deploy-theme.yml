@@ -17,7 +17,8 @@ jobs:
     env:
       # These should be configured in repository Secrets
       SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
-      SHOPIFY_PASSWORD: ${{ secrets.SHOPIFY_PASSWORD }}
+      SHOPIFY_CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
+      SHOPIFY_CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
 
     steps:
       - name: Checkout repository
@@ -51,7 +52,8 @@ jobs:
       - name: Deploy theme
         env:
           SHOPIFY_STORE: ${{ env.SHOPIFY_STORE }}
-          SHOPIFY_PASSWORD: ${{ env.SHOPIFY_PASSWORD }}
+          SHOPIFY_CLIENT_ID: ${{ env.SHOPIFY_CLIENT_ID }}
+          SHOPIFY_CLIENT_SECRET: ${{ env.SHOPIFY_CLIENT_SECRET }}
           THEME_NAME: ${{ steps.theme-config.outputs.theme_name }}
           PUBLISH_FLAG: ${{ steps.theme-config.outputs.publish_flag }}
         run: |
@@ -59,14 +61,10 @@ jobs:
           echo "Theme: $THEME_NAME"
           echo "Branch: ${{ github.ref_name }}"
           
-          if [ -z "$SHOPIFY_STORE" ] || [ -z "$SHOPIFY_PASSWORD" ]; then
-            echo "Missing SHOPIFY_STORE or SHOPIFY_PASSWORD secrets. Aborting." >&2
+          if [ -z "$SHOPIFY_STORE" ] || [ -z "$SHOPIFY_CLIENT_ID" ] || [ -z "$SHOPIFY_CLIENT_SECRET" ]; then
+            echo "Missing required Shopify credentials. Aborting." >&2
             exit 1
           fi
           
-          # The CLI usage/flags can change between versions. If this command fails,
-          # update it to match your installed Shopify CLI version.
-          shopify theme push $PUBLISH_FLAG -t "$THEME_NAME" || (
-            echo "Attempting fallback with explicit store/password flags..."
-            shopify theme push --store "$SHOPIFY_STORE" --password "$SHOPIFY_PASSWORD" $PUBLISH_FLAG -t "$THEME_NAME"
-          )
+          # Authenticate and deploy using client credentials
+          shopify theme push $PUBLISH_FLAG -t "$THEME_NAME"
