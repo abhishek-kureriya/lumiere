@@ -52,23 +52,23 @@ jobs:
       - name: Deploy theme
         env:
           SHOPIFY_FLAG_STORE: ${{ env.SHOPIFY_STORE }}
-          SHOPIFY_FLAG_CLIENT_ID: ${{ env.SHOPIFY_CLIENT_ID }}
-          SHOPIFY_FLAG_CLIENT_SECRET: ${{ env.SHOPIFY_CLIENT_SECRET }}
+          SHOPIFY_CLI_APP_CLIENT_ID: ${{ env.SHOPIFY_CLIENT_ID }}
+          SHOPIFY_CLI_APP_CLIENT_SECRET: ${{ env.SHOPIFY_CLIENT_SECRET }}
           THEME_NAME: ${{ steps.theme-config.outputs.theme_name }}
           PUBLISH_FLAG: ${{ steps.theme-config.outputs.publish_flag }}
         run: |
           echo "Deploying theme to store: $SHOPIFY_FLAG_STORE"
           echo "Theme: $THEME_NAME"
           echo "Branch: ${{ github.ref_name }}"
-          echo "Client ID set: $([ -n "$SHOPIFY_FLAG_CLIENT_ID" ] && echo "YES" || echo "NO")"
-          echo "Client Secret set: $([ -n "$SHOPIFY_FLAG_CLIENT_SECRET" ] && echo "YES" || echo "NO")"
+          echo "Client ID set: $([ -n "$SHOPIFY_CLI_APP_CLIENT_ID" ] && echo "YES" || echo "NO")"
+          echo "Client Secret set: $([ -n "$SHOPIFY_CLI_APP_CLIENT_SECRET" ] && echo "YES" || echo "NO")"
           
-          if [ -z "$SHOPIFY_FLAG_STORE" ] || [ -z "$SHOPIFY_FLAG_CLIENT_ID" ] || [ -z "$SHOPIFY_FLAG_CLIENT_SECRET" ]; then
+          if [ -z "$SHOPIFY_FLAG_STORE" ] || [ -z "$SHOPIFY_CLI_APP_CLIENT_ID" ] || [ -z "$SHOPIFY_CLI_APP_CLIENT_SECRET" ]; then
             echo "Missing required Shopify credentials. Aborting." >&2
             exit 1
           fi
           
-          # Deploy using client credentials with explicit flags
+          # Deploy using app-based authentication
           shopify theme push $PUBLISH_FLAG \
             --store "$SHOPIFY_FLAG_STORE" \
             --theme "$THEME_NAME" \
