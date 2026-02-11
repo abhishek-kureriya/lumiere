@@ -13,45 +13,39 @@ on:
       - develop
 
 jobs:
-  # Run tests first
-  test:
-    name: Run Theme Tests
+  # Basic lint and validation only
+  validate:
+    name: Basic Validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
-      # Run the theme validation tests
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
       
-      - name: Theme Check
+      - name: Theme Check (Errors Only)
         run: shopify theme check --fail-level=error
         
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          
-      - name: Quick Asset Validation
+      - name: JSON Validation
         run: |
-          # Check for basic issues
-          echo "=== Quick Asset Check ==="
-          
-          # Check for large assets
-          find assets/ -name "*.js" -size +200k -exec echo "⚠️ Large JS: {}" \; || true
-          find assets/ -name "*.css" -size +100k -exec echo "⚠️ Large CSS: {}" \; || true
-          
-          # Basic JSON validation
+          # Validate settings schema
           if [ -f "config/settings_schema.json" ]; then
             python3 -c "import json; json.load(open('config/settings_schema.json'))" && echo "✅ Schema JSON valid"
           fi
           
-          echo "✅ Quick validation completed"
+          # Validate locales
+          if [ -d "locales" ]; then
+            for locale_file in locales/*.json; do
+              if [ -f "$locale_file" ]; then
+                python3 -c "import json; json.load(open('$locale_file'))" && echo "✅ $(basename $locale_file) valid"
+              fi
+            done
+          fi
 
-  # Deploy only after tests pass and only on push (not PR)
+  # Deploy only after validation passes and only on push (not PR)
   deploy:
     name: Deploy theme
-    needs: test
+    needs: validate
     if: github.event_name == 'push'  # Only deploy on push, not pull requests
     runs-on: ubuntu-latest
     permissions:
