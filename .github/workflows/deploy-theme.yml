@@ -1,4 +1,4 @@
-name: Deploy Shopify theme on push
+name: Test and Deploy Shopify Theme
 
 on:
   push:
@@ -7,10 +7,52 @@ on:
       - develop
       - staging
       - '**'  # All branches
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
+  # Run tests first
+  test:
+    name: Run Theme Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # Run the theme validation tests
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+      
+      - name: Theme Check
+        run: shopify theme check --fail-level=error
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Quick Asset Validation
+        run: |
+          # Check for basic issues
+          echo "=== Quick Asset Check ==="
+          
+          # Check for large assets
+          find assets/ -name "*.js" -size +200k -exec echo "⚠️ Large JS: {}" \; || true
+          find assets/ -name "*.css" -size +100k -exec echo "⚠️ Large CSS: {}" \; || true
+          
+          # Basic JSON validation
+          if [ -f "config/settings_schema.json" ]; then
+            python3 -c "import json; json.load(open('config/settings_schema.json'))" && echo "✅ Schema JSON valid"
+          fi
+          
+          echo "✅ Quick validation completed"
+
+  # Deploy only after tests pass and only on push (not PR)
   deploy:
     name: Deploy theme
+    needs: test
+    if: github.event_name == 'push'  # Only deploy on push, not pull requests
     runs-on: ubuntu-latest
     permissions:
       contents: read

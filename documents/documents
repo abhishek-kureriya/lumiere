@@ -1,0 +1,201 @@
+# CI/CD Pipeline for Shopify Theme Deployment
+
+This repository includes automated deployment of Shopify themes using GitHub Actions. Every push to any branch automatically deploys the theme to Shopify.
+
+## 🚀 How It Works
+
+**Branch-based deployment strategy:**
+- **`main` branch** → Deploys to **"Radiant"** (live theme)
+- **All other branches** → Deploy to **"Development"** (unpublished theme)
+
+## 📋 Prerequisites
+
+### 1. Shopify Admin API Access Token
+
+You need a Shopify Admin API access token with theme permissions:
+
+1. Go to **Shopify Admin** → **Settings** → **Apps and sales channels**
+2. Click **"Develop apps"**
+3. **Create an app** or edit existing one
+4. **Configure Admin API scopes**:
+   - ✅ `write_themes` (required)
+   - ✅ `read_themes` (optional, for listing themes)
+5. **Install app** and copy the **Admin API access token**
+6. Token should start with `shpat_`
+
+### 2. GitHub Repository Secrets
+
+Configure these secrets in your GitHub repository:
+
+**Settings** → **Secrets and variables** → **Actions** → **New repository secret**
+
+| Secret Name | Description | Example |
+|-------------|-------------|---------|
+| `SHOPIFY_STORE` | Your Shopify store domain | `your-store.myshopify.com` |
+| `SHOPIFY_TOKEN` | Admin API access token from step 1 | `shpat_abc123...` |
+
+## 🔄 Deployment Process
+
+### Automatic Deployment
+
+1. **Make changes** to your theme files locally
+2. **Commit changes**: `git add . && git commit -m "your message"`
+3. **Push to GitHub**: `git push`
+4. **GitHub Actions automatically**:
+   - Installs Shopify CLI
+   - Authenticates with your store
+   - Pushes theme files to appropriate Shopify theme
+   - Updates existing theme (doesn't create duplicates)
+
+### Manual Local Deployment
+
+Test deployment locally before pushing:
+
+```bash
+# Set up environment variables
+export SHOPIFY_STORE="your-store.myshopify.com"
+export SHOPIFY_TOKEN="shpat_your_token"
+
+# Deploy to Development theme
+shopify theme push --store "$SHOPIFY_STORE" --password "$SHOPIFY_TOKEN" --theme "Development" --force
+
+# Deploy to live Radiant theme (be careful!)
+shopify theme push --store "$SHOPIFY_STORE" --password "$SHOPIFY_TOKEN" --theme "Radiant" --force
+```
+
+## 📊 Monitoring Deployments
+
+### View Deployment Status
+
+1. Go to your GitHub repository
+2. Click **Actions** tab
+3. Select the latest **"Deploy Shopify theme on push"** workflow run
+4. Check the deployment logs
+
+### Successful Deployment Indicators
+
+Look for these in the workflow logs:
+- ✅ `Token set: YES`
+- ✅ `Deploying theme to store: your-store.myshopify.com`
+- ✅ `The theme 'Development' was pushed successfully`
+
+## 🛠️ Workflow Configuration
+
+### Main Workflow File
+
+`.github/workflows/deploy-theme.yml`
+
+### Key Features
+
+- **Multi-branch support**: Works with any branch name
+- **Environment isolation**: Development vs Live themes
+- **Error handling**: Validates credentials before deployment
+- **Force push**: Overwrites existing theme files
+- **Non-interactive**: Runs without user prompts
+
+### Customizing Deployment
+
+To modify the deployment behavior, edit `.github/workflows/deploy-theme.yml`:
+
+```yaml
+# Change target themes
+if [ "$BRANCH_NAME" = "main" ]; then
+  echo "theme_name=YourLiveTheme" >> $GITHUB_OUTPUT
+else
+  echo "theme_name=YourDevTheme" >> $GITHUB_OUTPUT
+fi
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**❌ "Missing required Shopify credentials"**
+- Check that `SHOPIFY_STORE` and `SHOPIFY_TOKEN` secrets are set
+- Verify secret names match exactly
+
+**❌ "Invalid API key or access token"**
+- Verify your Admin API token is correct
+- Ensure the app has `write_themes` permission
+- Check that the app is installed on the correct store
+
+**❌ "Authorization is required"**
+- Make sure you're using an Admin API token (starts with `shpat_`)
+- Verify the token hasn't expired
+- Check that the app is still installed
+
+**❌ "Theme not found"**
+- Theme names are case-sensitive
+- Create themes manually if they don't exist
+- Use `shopify theme list` to verify theme names
+
+### Debug Steps
+
+1. **Check secrets**: Ensure GitHub secrets are properly configured
+2. **Test locally**: Use the manual deployment commands above
+3. **View logs**: Check GitHub Actions workflow output for specific errors
+4. **Verify store**: Confirm you can access the Shopify admin
+
+### Local Testing Environment
+
+Create a `.env.local` file for local testing (don't commit this file):
+
+```bash
+# .env.local (add to .gitignore)
+SHOPIFY_STORE=your-store.myshopify.com
+SHOPIFY_TOKEN=shpat_your_admin_token
+```
+
+Test locally:
+```bash
+source .env.local
+shopify theme push --store "$SHOPIFY_STORE" --password "$SHOPIFY_TOKEN" --theme "Development" --force
+```
+
+## 🎯 Best Practices
+
+### Development Workflow
+
+1. **Feature branches**: Create feature branches for new work
+2. **Test locally**: Always test with `shopify theme dev` first
+3. **Review changes**: Use the Development theme to review before merging
+4. **Merge to main**: Only merge to `main` when ready for live deployment
+
+### Safety Guidelines
+
+- ⚠️ **Main branch deploys to live theme** - be careful!
+- ✅ **Test in feature branches first**
+- ✅ **Use Development theme for testing**
+- ✅ **Review changes before merging to main**
+- ✅ **Keep Admin API tokens secure**
+
+### Performance Tips
+
+- **Selective deployment**: Only commit files that actually changed
+- **Batch changes**: Group related changes in single commits
+- **Use .shopifyignore**: Exclude unnecessary files from deployment
+
+## 📁 File Structure
+
+```
+.github/
+  workflows/
+    deploy-theme.yml      # Main CI/CD workflow
+.gitignore               # Excludes .env.local
+.shopifyignore          # Excludes files from Shopify deployment
+CI-CD.md                # This documentation
+README.md               # Main project documentation
+```
+
+## 🔄 Updating the Pipeline
+
+If you need to modify the deployment process:
+
+1. Edit `.github/workflows/deploy-theme.yml`
+2. Test changes in a feature branch first
+3. Monitor workflow runs after changes
+4. Update this documentation as needed
+
+---
+
+**Need help?** Check the [GitHub Actions documentation](https://docs.github.com/en/actions) or the [Shopify CLI documentation](https://shopify.dev/docs/themes/tools/cli).
