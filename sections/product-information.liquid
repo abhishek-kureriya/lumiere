@@ -36,7 +36,7 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
       <div class="main-image-container" id="mainImageContainer">
         {%- if product.featured_media -%}
           <img 
-            src="{{ product.featured_media | img_url: '800x' }}" 
+            src="{{ product.featured_media | image_url: width: 800 }}" 
             alt="{{ product.title }}"
             class="main-image"
             id="mainImage"
@@ -68,8 +68,8 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
             {%- for media in product.media limit: 10 -%}
               <div class="thumb-item {% if forloop.first %}active{% endif %}"
                    data-index="{{ forloop.index0 }}"
-                   data-image-url="{{ media | img_url: '800x' }}">
-                <img src="{{ media | img_url: '150x' }}" width="150" height="150" alt="View {{ forloop.index }}">
+                   data-image-url="{{ media | image_url: width: 800 }}">
+                <img src="{{ media | image_url: width: 150 }}" width="150" height="150" alt="View {{ forloop.index }}">
               </div>
             {%- endfor -%}
           </div>
@@ -80,7 +80,7 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
     {%- comment -%} Product Info Section {%- endcomment -%}
     <div class="product-info-section">
       
-      <form action="/cart/add" method="post" id="productForm">
+      <form action="{{ routes.cart_add_url }}" method="post" id="productForm">
         <input type="hidden" name="id" id="variantId" value="{{ product.selected_or_first_available_variant.id }}">
         <input type="hidden" name="quantity" value="1" id="hiddenQtyInput">
         
@@ -239,9 +239,11 @@ PRODUCT PAGE - LUMIÈRE (FINAL + CART UPDATE + FIXED ZOOM)
       <span class="payment-label">We Accept:</span>
       {%- if section.settings.payment_badges != blank -%}
         <img 
-          src="{{ section.settings.payment_badges | img_url: '600x' }}" 
+          src="{{ section.settings.payment_badges | image_url: width: 600 }}" 
           alt="Accepted payment methods" 
           class="custom-payment-image"
+          width="600"
+          height="auto"
           loading="lazy">
       {%- else -%}
         {{ 'visa' | payment_type_svg_tag: class: 'payment-icon' }}

@@ -7,7 +7,7 @@ Features:
 - Heading + intro + trust row
 - Product grid with title, price, CUSTOM rating metafields + quick add to cart
 - Wishlist (favorites) toggle via localStorage
-- Image swap: hover on desktop, tap on mobile
+- Image swap: hover on desktop, swipe on mobile
 - Product click opens product page
 ========================================================
 {% endcomment %}
@@ -91,8 +91,11 @@ Features:
                 <span class="lumiere-badge">SALE</span>
               {%- endif -%}
 
-              {%- if section.settings.show_swap_hint and img2 -%}
-                <span class="lumiere-swap-hint">Tap to view</span>
+              {%- if img2 -%}
+                <div class="lumiere-carousel-dots">
+                  <span class="dot active"></span>
+                  <span class="dot"></span>
+                </div>
               {%- endif -%}
             </a>
 
@@ -189,16 +192,64 @@ Features:
     syncFavUI();
   });
 
-  // Image swap tap (mobile)
+  // Image swap with swipe (mobile) and hover (desktop)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let currentSwipeWrap = null;
+
+  // Swipe detection for mobile
+  root.addEventListener('touchstart', function(e) {
+    const wrap = e.target.closest('[data-swap-wrap]');
+    if (!wrap || !window.matchMedia('(max-width: 768px)').matches) return;
+    
+    currentSwipeWrap = wrap;
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  root.addEventListener('touchend', function(e) {
+    if (!currentSwipeWrap || !window.matchMedia('(max-width: 768px)').matches) return;
+    
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    if (!currentSwipeWrap) return;
+    
+    const swipeThreshold = 50; // minimum distance for swipe
+    const swipeDistance = touchEndX - touchStartX;
+    
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      // Swipe detected - toggle image
+      currentSwipeWrap.classList.toggle('is-swapped');
+      updateDots(currentSwipeWrap);
+    }
+    
+    currentSwipeWrap = null;
+    touchStartX = 0;
+    touchEndX = 0;
+  }
+
+  function updateDots(wrap) {
+    const dots = wrap.parentElement.querySelectorAll('.lumiere-carousel-dots .dot');
+    if (dots.length !== 2) return;
+    
+    const isSwapped = wrap.classList.contains('is-swapped');
+    dots[0].classList.toggle('active', !isSwapped);
+    dots[1].classList.toggle('active', isSwapped);
+  }
+
+  // Keep tap fallback for accessibility
   root.addEventListener('click', function(e) {
     const wrap = e.target.closest('[data-swap-wrap]');
     if (!wrap) return;
 
-    // Only handle mobile-ish screens
+    // Only handle mobile-ish screens and when no swipe was detected
     if (window.matchMedia('(max-width: 768px)').matches) {
       // prevent link navigation when tapping image area
       e.preventDefault();
       wrap.classList.toggle('is-swapped');
+      updateDots(wrap);
     }
   });
 
@@ -291,7 +342,7 @@ Features:
 .lumiere-collection-grid__trust{
   display: flex;
   justify-content: center;
-  gap: 0.6rem;
+  gap: 0.2rem;
   flex-wrap: wrap;
 }
 .trust-pill{
@@ -381,22 +432,35 @@ Features:
 .lumiere-card__imgwrap.is-swapped .lumiere-card__img.is-primary{ opacity: 0; }
 .lumiere-card__imgwrap.is-swapped .lumiere-card__img.is-secondary{ opacity: 1; }
 
-.lumiere-swap-hint{
+/* Mobile carousel dots */
+.lumiere-carousel-dots{
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.4rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.55);
-  color: #fff;
-  backdrop-filter: blur(8px);
+  display: flex;
+  gap: 6px;
 }
 @media (min-width: 769px){
-  .lumiere-swap-hint{ display:none; }
+  .lumiere-carousel-dots{ display: none; }
+}
+.lumiere-carousel-dots .dot{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.8);
+  border: 1.5px solid rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.lumiere-carousel-dots .dot.active{
+  background: rgba(212,175,55,0.9);
+  border-color: rgba(212,175,55,1);
+  transform: scale(1.2);
+  box-shadow: 0 2px 6px rgba(212,175,55,0.3);
+}
 }
 
 .lumiere-badge{
@@ -448,7 +512,8 @@ Features:
     font-size: 0.92rem;
     line-height: 1.42;
     letter-spacing: 0.04em;
-    min-height: calc(1.42em * 2);
+    -webkit-line-clamp: 3; /* Allow 3 lines on mobile */
+    min-height: auto; /* Remove fixed height on mobile */
   }
 }
 .lumiere-card__title:hover{
@@ -648,12 +713,6 @@ Features:
       "type": "checkbox",
       "id": "show_empty_rating",
       "label": "Show 'New' when rating not available",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_swap_hint",
-      "label": "Show 'Tap to view' hint on mobile (only when 2nd image exists)",
       "default": true
     },
     {

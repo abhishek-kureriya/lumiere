@@ -33,13 +33,32 @@ jobs:
             python3 -c "import json; json.load(open('config/settings_schema.json'))" && echo "✅ Schema JSON valid"
           fi
           
-          # Validate locales
+          # Validate locales with better error handling
           if [ -d "locales" ]; then
+            failed_files=()
             for locale_file in locales/*.json; do
               if [ -f "$locale_file" ]; then
-                python3 -c "import json; json.load(open('$locale_file'))" && echo "✅ $(basename $locale_file) valid"
+                # Skip files that start with comments (they're not pure JSON)
+                if head -1 "$locale_file" | grep -q "^/\*\|^//"; then
+                  echo "⚠️ $(basename $locale_file) contains comments, skipping validation"
+                  continue
+                fi
+                
+                if python3 -c "import json; json.load(open('$locale_file'))" 2>/dev/null; then
+                  echo "✅ $(basename $locale_file) valid"
+                else
+                  echo "❌ $(basename $locale_file) invalid JSON"
+                  failed_files+=("$(basename $locale_file)")
+                fi
               fi
             done
+            
+            # Fail the build if any critical locale files are invalid
+            if [ ${#failed_files[@]} -gt 0 ]; then
+              echo "Failed locale files: ${failed_files[*]}"
+              echo "Please fix JSON syntax errors in locale files"
+              exit 1
+            fi
           fi
 
   # Deploy only after validation passes and only on push (not PR)

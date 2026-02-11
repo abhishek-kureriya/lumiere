@@ -955,6 +955,11 @@ summary::-webkit-details-marker {
   display: none;
 }
 
+/* When header is NOT transparent, ensure content is pushed below the sticky header */
+body:not(:has(.header[transparent])) .content-for-layout {
+  padding-top: var(--header-group-height);
+}
+
 /* When header is transparent, pull the first main content section up to sit under the floating header */
 body:has(.header[transparent]) .content-for-layout > .shopify-section:first-child {
   margin-top: calc(var(--header-group-height) * -1);
