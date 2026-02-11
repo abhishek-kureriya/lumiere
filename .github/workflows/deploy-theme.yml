@@ -125,4 +125,5 @@ jobs:
             --store "$SHOPIFY_STORE" \
             --password "$SHOPIFY_TOKEN" \
             --theme "$THEME_NAME" \
+            --ignore "config/settings_data.json" \
             --force
